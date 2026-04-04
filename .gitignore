@@ -1,3 +1,14 @@
-.vscode/ 
-__pycache__/ 
-*.log 
+# Pastas do Editor
+.vscode/
+
+# Arquivos temporários do Python
+__pycache__/
+*.py[cod]
+
+# Logs e Backups
+*.log
+database/*.bak
+
+# Ambiente Virtual (se existir)
+venv/
+.env
