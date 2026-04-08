@@ -21,8 +21,8 @@ class EmpresaService:
         
         def buscar_cnpj(self, cnpj):
             empresa_existente = self.repo.empresa_encontrada(cnpj) # self.repo, onde se salvou o repository, busca um  cnpj, se for igual lança um erro
-        if empresa_existente is not None:
-            raise CnpjJaCadastrado("Esse CNPJ já esta cadastrado") 
+            if empresa_existente is not None:
+                raise CnpjJaCadastrado("Esse CNPJ já esta cadastrado") 
     
     def buscar_id(self, id):
         id_empresa = self.repo.buscar_id(id) # self.repo, onde se salvou o repository, busca um id, aquele em especifico
