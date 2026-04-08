@@ -20,7 +20,7 @@ class EmpresaService:
         return empresa_salva
         
     def buscar_cnpj(self, cnpj):
-        cnpj = self.repo.empresa_existente(cnpj) # self.repo, onde se salvou o repository, busca um  cnpj, se for igual lança um erro
+        cnpj = self.repo.empresa_encontrada(cnpj) # self.repo, onde se salvou o repository, busca um  cnpj, se for igual lança um erro
         if cnpj != None:
             raise CnpjJaCadastrado("Esse CNPJ já esta cadastrado") 
     
