@@ -4,4 +4,4 @@ class Empresa:
         self.nome: str = nome
         self.cnpj: str = cnpj
         self.max_profissionais: int = max_profissionais
-        self.total_admins: int = total_admins
+        
