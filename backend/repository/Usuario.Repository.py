@@ -1,17 +1,17 @@
 from infra.conexao_db import criar_conexao
 
-class EmpresaRepository:
-    def salvar(self, empresa):
+class UsuarioRepository:
+    def salvar(self, usuario):
         db_connection = criar_conexao() # tenta ganhar a conexao aberta da pasta infra
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
-                sql = "INSERT INTO Empresa(nome, cnpj) VALUES (%s, %s)"
-                valores = (empresa.nome, empresa.cnpj)
+                sql = "INSERT INTO Usuario(nome, email, senha, perfil) VALUES (%s, %s, %s, %s)"
+                valores = (usuario.nome, usuario.email, usuario.senha, usuario.perfil)
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente
-                print(f"✅ Sucesso! {empresa.nome} salva.")
+                print(f"✅ Sucesso! {usuario.email} salva.")
 
             except Exception as e:
                 print(f"Erro no Repository: {e}")
@@ -26,13 +26,13 @@ class EmpresaRepository:
             print("O Repository parou porque a Infra falhou.")
 
 
-    def buscar_por_cnpj(self, cnpj):
+    def buscar_por_email(self, email):
         db_connection = criar_conexao()
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True)
-                sql = "SELECT * FROM Empresa WHERE cnpj = %s"
-                cursor.execute(sql,(cnpj,))
+                sql = "SELECT * FROM Usuario WHERE email = %s"
+                cursor.execute(sql,(email,))
                 resultado = cursor.fetchone() # traz o resultado do banco
                 return resultado
             except Exception as e:
