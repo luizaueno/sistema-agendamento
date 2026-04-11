@@ -11,7 +11,7 @@ class UsuarioRepository:
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente
-                print(f"✅ Sucesso! {usuario.email} salva.")
+                print(f"✅ Sucesso! {usuario.email} salvo.")
 
             except Exception as e:
                 print(f"Erro no Repository: {e}")

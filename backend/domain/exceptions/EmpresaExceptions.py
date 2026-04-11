@@ -10,5 +10,8 @@ class CnpjInvalido(Exception):
 class CnpjJaCadastrado(Exception):
     pass
 
+class LimiteAdmins(Exception):
+    pass
+
 class EmpresaNaoEncontrada(Exception):
     pass
