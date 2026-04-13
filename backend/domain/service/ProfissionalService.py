@@ -1,6 +1,6 @@
 import bcrypt
 from domain.entities.Profissional import Profissional #  pasta entities, arquivo profissional, importe a classe profissional
-from domain.exceptions import UsuarioNaoEncontrado, CampoObrigatorioVazio, EmailInvalido, SenhaInvalida, EmailJaCadastrado
+from domain.exceptions.UsuarioExceptions import UsuarioNaoEncontrado, CampoObrigatorioVazio, EmailInvalido, SenhaInvalida, EmailJaCadastrado
 
 class ProfissionalService:
     def __init__(self, profissional_repository):
