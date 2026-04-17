@@ -1,5 +1,4 @@
-class CampoObrigatorioVazio(Exception):
-    pass
+from domain.exceptions.ExceptionCampoVazio import ExceptionCampoObrigatorioVazio
 
 class CpfInvalido(Exception):
     pass

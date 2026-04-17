@@ -1,0 +1,2 @@
+class CampoObrigatorioVazio(Exception):
+    pass

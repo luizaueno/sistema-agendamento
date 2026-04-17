@@ -1,5 +1,5 @@
-class CampoObrigatorioVazio(Exception):
-    pass
+from domain.exceptions.ExceptionCampoVazio import ExceptionCampoObrigatorioVazio
+
 class UsuarioNaoEncontrado(Exception):
     pass
 class EmailInvalido(Exception):
