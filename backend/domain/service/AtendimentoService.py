@@ -58,7 +58,8 @@ class AtendimentoService:
 
     def buscar_por_status(self, status):
         valores_status = ["AGENDADO", "CANCELADO", "CONFIRMADO", "REALIZADO"]
-        if status in valores_status:
-            status_valido = self.repo_atendimento.buscar_por_status(status)
-            return status_valido
-        raise StatusInvalido("Esse status não está disponível")
+        if status not in valores_status:
+            raise StatusInvalido("Esse status não está disponível")
+        status_valido = self.repo_atendimento.buscar_por_status(status)
+        return status_valido
+    
