@@ -99,10 +99,10 @@ class AtendimentoRepository:
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True)
-                sql = "SELECT * FROM Atendimento WHERE id_profissional = %s and data = %s and hora_inicio = %s and hora_fim = %s"
-                cursor.execute(sql,(id_profissional, data, hora_inicio, hora_fim))
+                sql = "SELECT * FROM Atendimento WHERE id_profissional = %s and data = %s and hora_inicio < %s and hora_fim > %s" # hora_inicio menor que hora_fim e hora_fim maior que hora_inicio - se alguma retornar resultado, tem conflito!
+                cursor.execute(sql,(id_profissional, data, hora_fim, hora_inicio))
                 resultado = cursor.fetchall()
-                return resultado
+                return not resultado
             except Exception as e:
                 print(f"Erro ao buscar no banco: {e}")
                 return None
