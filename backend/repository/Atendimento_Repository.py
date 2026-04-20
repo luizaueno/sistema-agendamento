@@ -26,23 +26,6 @@ class AtendimentoRepository:
         else:
             print("O Repository parou porque a Infra falhou.")
 
-    def buscar_por_status(self, status):
-        db_connection = criar_conexao()
-        if db_connection:
-            try:
-                cursor = db_connection.cursor(dictionary=True)
-                sql = "SELECT * FROM Atendimento WHERE status = %s"
-                cursor.execute(sql,(status,))
-                resultado = cursor.fetchall()
-                return resultado
-            except Exception as e:
-                print(f"Erro ao buscar no banco: {e}")
-                return None
-            finally:
-                if db_connection.is_connected():
-                    cursor.close()
-                    db_connection.close()
-
     def buscar_por_paciente(self, id_paciente):
         db_connection = criar_conexao()
         if db_connection:
@@ -84,7 +67,24 @@ class AtendimentoRepository:
                 cursor = db_connection.cursor(dictionary=True)
                 sql = "SELECT * FROM Atendimento WHERE data = %s"
                 cursor.execute(sql,(data,))
-                resultado = cursor.fetchone()
+                resultado = cursor.fetchall()
+                return resultado
+            except Exception as e:
+                print(f"Erro ao buscar no banco: {e}")
+                return []
+            finally:
+                if db_connection.is_connected():
+                    cursor.close()
+                    db_connection.close()
+
+    def buscar_por_status(self, status):
+        db_connection = criar_conexao()
+        if db_connection:
+            try:
+                cursor = db_connection.cursor(dictionary=True)
+                sql = "SELECT * FROM Atendimento WHERE status = %s"
+                cursor.execute(sql,(status,))
+                resultado = cursor.fetchall()
                 return resultado
             except Exception as e:
                 print(f"Erro ao buscar no banco: {e}")
