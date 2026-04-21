@@ -32,7 +32,7 @@ class AtendimentoRepository:
             try:
                 cursor = db_connection.cursor(dictionary=True)
                 sql = "SELECT * FROM Atendimento WHERE id_paciente = %s"
-                cursor.execute(sql,(id_paciente))
+                cursor.execute(sql,(id_paciente,))
                 resultado = cursor.fetchall()
                 return resultado
             except Exception as e:

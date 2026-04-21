@@ -1,4 +1,3 @@
-
 class Prontuario:
     def __init__(self, id_paciente, diagnostico, plano_terapeutico, id=None):
         self.id: int = id
