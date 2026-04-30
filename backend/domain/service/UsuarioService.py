@@ -1,6 +1,11 @@
 import bcrypt
+import jwt
+import os
 from domain.entities.Usuario import Usuario #  pasta entities, arquivo usuario, importe a classe usuario
 from domain.exceptions import UsuarioNaoEncontrado, CampoObrigatorioVazio, EmailInvalido, SenhaInvalida, EmailJaCadastrado
+from datetime import datetime, timedelta
+from domain.responses import LoginResponse
+
 
 class UsuarioService:
     def __init__(self, usuario_repository):
@@ -31,11 +36,22 @@ class UsuarioService:
         self.repo.salvar(login) # salva as informações de login com a senha 
 
     def fazer_login(self, email, senha):
+        secret_key = os.getenv("secret_key")
         email_existente = self.repo.buscar_por_email(email)
         if email_existente is None:
             raise UsuarioNaoEncontrado("Esse usuário não está cadastrado")
         
         senha_correta = bcrypt.checkpw(senha.encode(), email_existente.senha)
         if not senha_correta:
-            raise SenhaInvalida("Senha Inválida")   
-        return email_existente
+            raise SenhaInvalida("Senha Inválida")  
+        
+        data_expiracao = datetime.now() + timedelta(hours=8)
+        payload = {
+            "email": email_existente.email,
+            "perfil": email_existente.perfil, 
+            "exp": data_expiracao
+        }
+
+        token = jwt.encode(payload, secret_key, algorithm = "HS256")
+        loginResposta = LoginResponse(token, data_expiracao, email_existente.perfil)
+        return loginResposta
