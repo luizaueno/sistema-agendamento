@@ -6,6 +6,9 @@ class NomeInvalido(Exception):
 class CnpjInvalido(Exception):
     pass
 
+class EmailInvalido(Exception):
+    pass
+
 class CnpjJaCadastrado(Exception):
     pass
 

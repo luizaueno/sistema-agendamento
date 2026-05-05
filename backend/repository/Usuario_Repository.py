@@ -7,7 +7,7 @@ class UsuarioRepository:
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
                 sql = "INSERT INTO Usuario(nome, email, senha, perfil) VALUES (%s, %s, %s, %s)"
-                valores = (usuario.nome, usuario.email, usuario.senha, usuario.perfil)
+                valores = (usuario.nome, usuario.email, usuario.senha, usuario.perfilEnum(perfil))
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente
@@ -36,8 +36,11 @@ class UsuarioRepository:
                 resultado = cursor.fetchone() # traz o resultado do banco
                 return resultado
             except Exception as e:
+                if resultado is None:
+                    return "Esse usuario não existe no banco de dados"
                 print(f"Erro ao buscar no banco: {e}")
                 return None
+            
             finally:
                 if db_connection.is_connected():
                     cursor.close()

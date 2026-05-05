@@ -6,8 +6,8 @@ class EmpresaRepository:
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
-                sql = "INSERT INTO Empresa(nome, cnpj) VALUES (%s, %s)"
-                valores = (empresa.nome, empresa.cnpj)
+                sql = "INSERT INTO Empresa(nome, cnpj, email_empresa) VALUES (%s, %s, %s)"
+                valores = (empresa.nome, empresa.cnpj, empresa.email_empresa)
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente

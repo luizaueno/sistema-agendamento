@@ -16,12 +16,13 @@ class UsuarioService:
         if email_existente is not None:
             raise EmailJaCadastrado("Esse Email já está cadastrado") 
     
-    def cadastrar(self, perfil, email, senha):
-        if  perfil=="" or email=="" or senha=="":
+    def cadastrar(self, nome, email, senha, is_admin, perfil):
+        if email=="" or senha=="":
             raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
         if not "@" in email or not ".com" in email:
             raise EmailInvalido("Email Inválido")
         self.buscar_por_email(email)
+        
         if len(senha) < 8:
             raise SenhaInvalida("Senha Inválida") 
         if not any(l.islower() for l in senha): # se não tiver qualquer minuscula
@@ -32,11 +33,10 @@ class UsuarioService:
             raise SenhaInvalida("Senha Inválida")    
         
         senha_banco = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
-        login = Usuario( email, senha_banco, perfil)
+        login = Usuario(nome, email, senha_banco, is_admin, perfil)
         self.repo.salvar(login) # salva as informações de login com a senha 
 
     def fazer_login(self, email, senha):
-        secret_key = os.getenv("secret_key")
         email_existente = self.repo.buscar_por_email(email)
         if email_existente is None:
             raise UsuarioNaoEncontrado("Esse usuário não está cadastrado")
@@ -48,10 +48,9 @@ class UsuarioService:
         data_expiracao = datetime.now() + timedelta(hours=8)
         payload = {
             "email": email_existente.email,
-            "perfil": email_existente.perfil, 
             "exp": data_expiracao
         }
 
-        token = jwt.encode(payload, secret_key, algorithm = "HS256")
-        loginResposta = LoginResponse(token, data_expiracao, email_existente.perfil)
+        token = jwt.encode(payload, algorithm = "HS256")
+        loginResposta = LoginResponse(token, data_expiracao)
         return loginResposta
