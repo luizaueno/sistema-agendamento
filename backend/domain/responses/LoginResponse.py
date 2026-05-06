@@ -4,6 +4,7 @@ from datetime import datetime
 class PerfilEnum(Enum):
     ADMIN = "Admin"
     PROFISSIONAL = "Profissional"
+    ADMIN_PROFISSIONAL = "Admin-Profissional"
 
 class LoginResponse:
     def __init__(self, token, tempo_expiracao, perfil):

@@ -16,7 +16,7 @@ class UsuarioService:
         if email_existente is not None:
             raise EmailJaCadastrado("Esse Email já está cadastrado") 
     
-    def cadastrar(self, nome, email, senha, is_admin, perfil):
+    def cadastrar(self, nome, email, senha, email_empresa, perfil):
         if email=="" or senha=="":
             raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
         if not "@" in email or not ".com" in email:
@@ -33,7 +33,7 @@ class UsuarioService:
             raise SenhaInvalida("Senha Inválida")    
         
         senha_banco = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
-        login = Usuario(nome, email, senha_banco, is_admin, perfil)
+        login = Usuario(nome, email, senha_banco, email_empresa, perfil)
         self.repo.salvar(login) # salva as informações de login com a senha 
 
     def fazer_login(self, email, senha):
