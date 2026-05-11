@@ -11,4 +11,4 @@ empresa1 = EmpresaService(repo)
 @rotas.post("/cadastrar")
 def cadastrar(dto: CadastroDTO):
     response = empresa1.cadastrar(dto.nome, dto.cnpj, dto.email_empresa)
-    return CadastroResponse(response.nome, response.cnpj, response.email_empresa)
+    return CadastroResponse(response.nome, response.cnpj, response.email_empresa) 

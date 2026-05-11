@@ -1,29 +1,11 @@
 from domain.entities.Empresa import Empresa #  pasta entities, arquivo Empresa, importe a classe Empresa
-from domain.exceptions import CampoObrigatorioVazio, EmpresaNaoEncontrada, EmailInvalido, NomeInvalido, CnpjInvalido, CnpjJaCadastrado, LimiteAdmins
+from domain.exceptions import EmpresaNaoEncontrada, CnpjJaCadastrado, LimiteAdmins
 
 class EmpresaService:
     def __init__(self, empresa_repository):
         self.repo = empresa_repository # salva o repository para se aplicar as regras
 
-    def cadastrar(self, nome, cnpj, email_empresa):
-
-        if nome== "" or cnpj== "" or email_empresa=="":
-            raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
-        elif len(nome) <= 5:
-            raise NomeInvalido("O nome da sua empresa precisa ter mais de 5 caracteres")
-        
-        cnpj_valido = cnpj.replace(".", "")
-        cnpj_valido = cnpj_valido.replace("/", "")
-        cnpj_valido = cnpj_valido.replace( "-", "")
-
-        if len(cnpj_valido) < 14:
-            raise CnpjInvalido("O CNPJ inserido não tem o tamanho correto")
-        self.buscar_por_cnpj(cnpj_valido)
-
-        if not "@" in email_empresa or not ".com" in email_empresa:
-            raise EmailInvalido("Email Inválido")
-
-
+    def cadastrar(self, nome, cnpj_valido, email_empresa):
         nova_empresa = Empresa(nome, cnpj_valido, email_empresa)
         empresa_salva = self.repo.salvar(nova_empresa)
         return empresa_salva
