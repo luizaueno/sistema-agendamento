@@ -6,6 +6,7 @@ class CadastroDTO(BaseModel):
     nome: str
     cnpj: str
     email_empresa: str
+    senha: str
 
     @field_validator('nome')
     def validar_nome(nome):
@@ -17,7 +18,7 @@ class CadastroDTO(BaseModel):
         return nome
     
     @classmethod
-    @field_validator('cnpj', mode="before")
+    @field_validator('cnpj', mode="before") # aceita dados sujos e tem a função de limpar
     def validar_cnpj(cls, v):
         if not isinstance(v, str):
             raise CnpjInvalido("Formato do cnpj incorreto")

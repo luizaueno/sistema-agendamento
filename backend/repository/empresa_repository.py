@@ -6,11 +6,12 @@ class EmpresaRepository:
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
-                sql = "INSERT INTO Empresa(nome, cnpj, email_empresa) VALUES (%s, %s, %s)"
-                valores = (empresa.nome, empresa.cnpj, empresa.email_empresa)
+                sql = "INSERT INTO Empresa(nome, cnpj, email_empresa, senha) VALUES (%s, %s, %s, %s)"
+                valores = (empresa.nome, empresa.cnpj, empresa.email_empresa, empresa.senha)
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente
+                id_atual = cursor.lastrowid # para pegar o ultimo id inserido
                 print(f"✅ Sucesso! {empresa.nome} salva.")
 
             except Exception as e:

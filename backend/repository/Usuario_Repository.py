@@ -1,4 +1,5 @@
 from infra.conexao_db import criar_conexao
+from enum import Enum
 
 class UsuarioRepository:
     def salvar(self, usuario):
@@ -6,8 +7,8 @@ class UsuarioRepository:
         if db_connection:
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
-                sql = "INSERT INTO Usuario(nome, email, senha, perfil) VALUES (%s, %s, %s, %s)"
-                valores = (usuario.nome, usuario.email, usuario.senha, usuario.perfilEnum(perfil))
+                sql = "INSERT INTO Usuario(nome, email, senha, perfil, id_empresa) VALUES (%s, %s, %s, %s, %s)"
+                valores = (usuario.nome, usuario.email, usuario.senha, usuario.perfil.value, usuario.id_empresa)
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
                 db_connection.commit() # confirma e salva permanentemente

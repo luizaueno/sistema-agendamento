@@ -3,8 +3,9 @@ from domain.exceptions import EmpresaNaoEncontrada, CnpjJaCadastrado, LimiteAdmi
 from presentation.dto import CadastroDTO
 
 class EmpresaService:
-    def __init__(self, empresa_repository):
-        self.repo = empresa_repository # salva o repository para se aplicar as regras
+    def __init__(self, empresa_repository, usuario_repository):
+        self.repo_empresa = empresa_repository # salva o repository para se aplicar as regras
+        self.repo_usuario = usuario_repository
 
     def cadastrar(self, dados: CadastroDTO): # tudo de CadastroDTO em uma variavel
         """
