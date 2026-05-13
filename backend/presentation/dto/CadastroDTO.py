@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
-from domain.exceptions import NomeInvalido, CampoObrigatorioVazio, CnpjInvalido, EmailInvalido
-from utils.cnpj import limpar_cnpj
+from domain.exceptions import NomeInvalido, CampoObrigatorioVazio, CnpjInvalido, EmailInvalido, SenhaInvalida
+from utils.limpar_cnpj import limpar_cnpj
 
 class CadastroDTO(BaseModel):
     nome: str
@@ -35,9 +35,22 @@ class CadastroDTO(BaseModel):
         v = v.strip()
         v = v.lower()
         if v == "":
-            raise CampoObrigatorioVazio("Campo obrigatório não preenchido")
+            raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
         email = v.split("@")
         if len(email) != 2 or "." not in email[1]:
             raise EmailInvalido("O formato do email está incorreto")
         return v
  
+    @classmethod
+    @field_validator('senha')
+    def validar_senha(cls, v):
+        v = v.strip()
+        if v == "":
+            raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
+        if len(v) < 8:
+            raise SenhaInvalida("A senha precisa de no mínimo 8 caracteres")
+        if not any(char.isupper() for char in v) or not any(char.islower() for char in v):  # char in v seria cada digito, no v, a string inteira
+            raise SenhaInvalida("A senha precisa ter ao menos uma letra maiúscula e outra minúscula")
+        if not any(char.isdigit() for char in v) or not any(char.isalnum() for char in v):
+            raise SenhaInvalida("A senha precisa ter ao menos um número e um caractere especial")
+        return v

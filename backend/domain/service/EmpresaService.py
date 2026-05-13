@@ -16,10 +16,11 @@ class EmpresaService:
         self.buscar_por_cnpj(dados.cnpj)
 
         # 2. Transformação: Transforma o DTO em um objeto da classe Empresa
-        nova_empresa = Empresa(
+        nova_empresa = Empresa (
             nome=dados.nome, 
             cnpj=dados.cnpj, 
-            email=dados.email_empresa
+            email=dados.email_empresa,
+            senha=dados.senha
         )
 
         # 3. Persistência: Manda o repositório salvar no banco
