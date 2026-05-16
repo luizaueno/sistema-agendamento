@@ -12,7 +12,7 @@ class Usuario:
     email: str
     senha: str
     perfil: Perfil
-    id_empresa: int| None = None
+    id_empresa: int | None = None
 
     def __init__(self, nome, email, senha, perfil, id=None, id_empresa=None):
         self.id = id
