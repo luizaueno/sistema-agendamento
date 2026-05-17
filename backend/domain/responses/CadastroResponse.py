@@ -1,5 +1,6 @@
 class CadastroResponse:
-    def __init__(self, nome, cnpj, email_empresa):
+    def __init__(self, nome, cnpj, email):
         self.nome: str = nome
         self.cnpj: str = cnpj
-        self.email_empresa: str = email_empresa
+        self.email: str = email
+        # Não tem senha por segurança, para não expor

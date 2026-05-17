@@ -1,14 +1,26 @@
 from fastapi import APIRouter
-from dto import CadastroDTO
+from presentation.dto.CadastroDTO import CadastroDTO
+from repository.Empresa_Repository import EmpresaRepository
+from domain.service.EmpresaService import EmpresaService
 from domain.responses import CadastroResponse
-from domain.service import EmpresaService
-from repository import Empresa_Repository
+from repository.Usuario_Repository import UsuarioRepository
+from domain.service.UsuarioService import UsuarioService
 
 rotas = APIRouter()
-repo = Empresa_Repository()
-empresa1 = EmpresaService(repo)
+
 
 @rotas.post("/cadastrar")
 def cadastrar(dto: CadastroDTO):
-    response = empresa1.cadastrar(dto.nome, dto.cnpj, dto.email_empresa)
-    return CadastroResponse(response.nome, response.cnpj, response.email_empresa) 
+    # 1. Criamos os dois repositórios (Empresa e Usuário)
+    repo = EmpresaRepository()
+    repo_usuario = UsuarioRepository()
+    
+    # 2. Criamos o service do usuário
+    usuario_service = UsuarioService(repo_usuario)
+    
+    # 3. Agora passamos tudo o que a EmpresaService precisa
+    empresa1 = EmpresaService(repo, repo_usuario, usuario_service)
+    
+    response = empresa1.cadastrar(dto)
+    empresa_criada = response["empresa"]
+    return CadastroResponse(response.nome, response.cnpj, response.email) 

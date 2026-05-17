@@ -51,6 +51,7 @@ class UsuarioService:
             "exp": data_expiracao
         }
 
-        token = jwt.encode(payload, algorithm = "HS256")
-        loginResposta = LoginResponse(token, data_expiracao)
+        secret_key = os.getenv("secret_key")
+        token = jwt.encode(payload, secret_key, algorithm = "HS256")
+        loginResposta = LoginResponse(token, data_expiracao, email_existente.perfil)
         return loginResposta

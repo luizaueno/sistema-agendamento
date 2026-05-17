@@ -20,7 +20,7 @@ class EmpresaService:
         self.buscar_por_cnpj(dados.cnpj)
 
         # faz o hash da senha enviada no cadastro
-        hash_gerado = SenhaUtil.hash(dados.senha)
+        hash_gerado = SenhaUtil.SenhaUtil.hash(dados.senha)
 
         # Transformação: Transforma o DTO em um objeto da classe Empresa
         nova_empresa = Empresa (
@@ -33,7 +33,7 @@ class EmpresaService:
         # Persistência: Manda o repositório salvar no banco
         empresa_salva = self.repo_empresa.salvar(nova_empresa)
         
-        usuario_salvo = self.serv_usuario.cadastrar(dados.nome, dados.email, hash_gerado, empresa_salva.email, "admin")
+        usuario_salvo = self.serv_usuario.cadastrar(dados.nome, dados.email, dados.senha, empresa_salva.email, "admin")
 
         return {
             "empresa": empresa_salva,
@@ -44,7 +44,7 @@ class EmpresaService:
         """
         Verifica se um CNPJ já está no sistema para evitar duplicidade.
         """
-        empresa_existente = self.repo.buscar_por_cnpj(cnpj_valido)
+        empresa_existente = self.repo_empresa.buscar_por_cnpj(cnpj_valido)
         
         if empresa_existente is not None:
             raise CnpjJaCadastrado("Esse CNPJ já está cadastrado")
@@ -54,7 +54,7 @@ class EmpresaService:
         """
         Busca uma empresa específica pelo ID para exibição ou edição.
         """
-        id_empresa = self.repo.buscar_id(id)
+        id_empresa = self.repo_empresa.buscar_id(id)
         
         if id_empresa is None:
             raise EmpresaNaoEncontrada("Empresa não cadastrada")

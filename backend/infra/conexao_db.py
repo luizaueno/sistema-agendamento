@@ -1,4 +1,4 @@
-import mysql.connector # Aqui Zchama o tradutor que o pip instalou
+import mysql.connector # Aqui chama o tradutor que o pip instalou
 import os # biblioteca do sistema para ler pastas e arquivos
 from dotenv import load_dotenv 
 

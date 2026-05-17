@@ -1,4 +1,4 @@
-from domain.exceptions.ExceptionCampoVazio import ExceptionCampoObrigatorioVazio
+from domain.exceptions.ExceptionCampoVazio import CampoObrigatorioVazio
 
 class UsuarioNaoEncontrado(Exception):
     pass
