@@ -31,12 +31,12 @@ class EmpresaService:
         )
 
         # Persistência: Manda o repositório salvar no banco
-        empresa_salva = self.repo_empresa.salvar(nova_empresa)
+        id_da_empresa = self.repo_empresa.salvar(nova_empresa)
         
-        usuario_salvo = self.serv_usuario.cadastrar(dados.nome, dados.email, dados.senha, empresa_salva.email, "admin")
+        usuario_salvo = self.serv_usuario.cadastrar(dados.nome, dados.email, dados.senha, id_da_empresa, "admin")
 
         return {
-            "empresa": empresa_salva,
+            "empresa": nova_empresa,
             "usuario": usuario_salvo
         }
 

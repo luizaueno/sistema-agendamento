@@ -13,9 +13,10 @@ class EmpresaRepository:
                 db_connection.commit() # confirma e salva permanentemente
                 empresa_id = cursor.lastrowid # para pegar o ultimo id inserido
                 print(f"✅ Sucesso! {empresa.nome} salva.")
+                return empresa_id
 
             except Exception as e:
-                print(f"Erro no Repository: {e}")
+                print(f"❌ Erro real no banco de dados: {e}")
 
             finally:
                 # Garante que o banco não fique sobrecarregado
@@ -26,7 +27,7 @@ class EmpresaRepository:
         else:
             print("O Repository parou porque a Infra falhou.")
 
-        return empresa
+       
     
     def buscar_por_cnpj(self, cnpj):
         db_connection = criar_conexao()
