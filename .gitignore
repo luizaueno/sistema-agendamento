@@ -12,3 +12,6 @@ database/*.bak
 # Ambiente Virtual (se existir)
 venv/
 .env
+
+# arquivo de dependencias
+node_modules
