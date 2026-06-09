@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Open+Sans:wght@400;600;700&display=swap');
+
+:root {
+    --login-background:#1F2937;
+    --cadastro-background: #374151;
+    --button-background: #88003F;
+    --input-background: #1F2937;
+    --input-border: #E5E7EB;
+    --text-color: #F3F4F6;
+    --button-text-color: #F3F4F6;
+}
+
+
+html.modo-claro {
+    --login-background: #CDD2DC;    
+    --cadastro-background: #E3E7ED;  
+    --input-background: #F0F2F5;    
+    --input-border: #717A8A;        
+    --text-color: #0F1824;          
+    --button-background: #A6004E;    
+    --button-text-color: #FFFFFF;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+
+html, #root {
+     font-size: 62.5%; 
+     height: 100%;
+     overflow: hidden;
+}
+
+
+body {
+    font-size: 1.6rem;
+    overflow: hidden;
+    background-color: var(--cadastro-background);
+    transition: background-color 0.3s ease;
+}
