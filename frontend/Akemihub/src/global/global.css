@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Open+Sans:wght@400;600;700&display=swap');
+
+:root {
+    --login-background:#1F2937;
+    --cadastro-background: #374151;
+    --button-background: #88003F;
+    --input-background: #1F2937;
+    --input-border: #E5E7EB;
+    --text-color: #F3F4F6;
+    --button-text-color: #F3F4F6;
+}
+
+
+html.modo-claro {
+    --login-background: #CDD2DC;    
+    --cadastro-background: #E3E7ED;  
+    --input-background: #F0F2F5;    
+    --input-border: #717A8A;        
+    --text-color: #0F1824;          
+    --button-background: #A6004E;    
+    --button-text-color: #FFFFFF;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+
+html {
+    font-size: 62.5%; 
+    height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+
+body {
+    font-size: 1.6rem;
+    overflow: hidden;
+}
+
+
+input, button {
+    font-family: inherit;
+    font-size: 1.6rem;
+}
+
+
+.fundo-login {
+    background-color: var(--login-background);
+    transition: background-color 0.6s ease-in-out;
+    min-height: 100vh; /* Garante que o fundo ocupe a tela inteira */
+    width: 100%;
+}
+
+/* Quando a tela de cadastro estiver ativa */
+.fundo-cadastro {
+    background-color: var(--cadastro-background);
+    transition: background-color 0.6s ease-in-out;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+#topo-ancora {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem; /* Cria um espaço fixo para o menu não subir */
+    padding: 2rem 2rem 0 2rem; /* Alinha o cabeçalho com as bordas da tela */
+}
+
+.titulo-sistema {
+    color: var(--text-color);
+    font-family: "Changa", sans-serif;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+/* 3. Mantém os links de acessibilidade ocultos até o Tab ser pressionado */
+.skip-link, .menu-principal {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+}
+
+/* Quando o usuário aperta TAB, o link de acessibilidade aparece no topo sem quebrar o layout */
+.skip-link:focus {
+    position: absolute; 
+    top: 3rem;       
+    left: 30rem;      
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0.8rem;   
+    z-index: 9999;  
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background-color: var(--cadastro-background); 
+    color: var(--text-color);
+    border-radius: 0.5rem;  
+    text-decoration: none;  
+    outline: none;
+    box-shadow: none; 
+}
+
+/* Remove o contorno se receber foco via clique de mouse */
+.skip-link:focus:not(:focus-visible),
+.menu-principal a:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ACESSIBILIDADE CORRIGIDA: Ajusta o contorno para não ficar colado e confuso */
+.skip-link:focus-visible {
+    outline: 3px solid var(--input-border);
+}
+
+
+
+
+/* Remove estilos padrão do botão de tema para não quebrar o alinhamento */
+#alternar-tema {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    color: var(--text-color); /* Garante que o ícone da lua/sol mude de cor com o tema */
+}

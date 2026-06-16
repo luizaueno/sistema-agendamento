@@ -1,8 +1,11 @@
+interface LoginProps {
+    className: string
+}
 
-function Login() {
+function Login({className}: LoginProps) {
 
     return(
-        <form className="painel-login" aria-labelledby="titulo-login"> 
+        <form className={`painel-login ${className}`} aria-labelledby="titulo-login"> 
         <fieldset className="login-section">
             <div className="tela-login-group">
                 <h1 className="login-title">Login</h1>
