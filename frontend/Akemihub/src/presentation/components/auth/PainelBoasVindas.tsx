@@ -1,3 +1,5 @@
+import './painelboasvindas.css'
+
 interface PainelProps {
     telaAtual: "login" | "cadastro";
     alternarTela: (tela: "login" | "cadastro") => void

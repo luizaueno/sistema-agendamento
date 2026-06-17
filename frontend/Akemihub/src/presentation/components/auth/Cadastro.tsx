@@ -1,8 +1,10 @@
+import './cadastro.css'
+
 interface CadastroProps {
     className: string
 }
 
-function Cadastro({className}: CadastroProps) {
+function Cadastro({ className }: CadastroProps) {
     return(
         <form className={`painel-cadastro ${className}`} aria-labelledby="painel-cadastro"> 
         <h2 id="painel-cadastro" className="cadastro-title">Crie sua Conta</h2> 
