@@ -24,7 +24,7 @@ function Cadastro({ className }: CadastroProps) {
         <fieldset className="form-cadastro-section">
             <legend className="sr-only">Dados de acesso</legend>
             <div className="form-cadastro-group">
-                <input className="form-cadastro-input" required placeholder=" " type="email" name="email" id="email"/>
+                <input className="form-cadastro-input" required placeholder="email@example.com" type="email" name="email" id="email"/>
                 <label className="form-cadastro-label" htmlFor="email">Email</label>
             </div>
             <div className="form-cadastro-group">

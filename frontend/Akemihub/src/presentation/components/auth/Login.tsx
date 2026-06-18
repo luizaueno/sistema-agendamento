@@ -18,7 +18,7 @@ function Login({ className }: LoginProps) {
                         id="login-email" 
                         className="tela-login-input" 
                         required 
-                        placeholder=" "
+                        placeholder="email@example.com"
                     />
                     <label className="tela-login-label" htmlFor="login-email">Email</label>
                 </div>

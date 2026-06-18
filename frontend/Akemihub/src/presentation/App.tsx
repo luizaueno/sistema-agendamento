@@ -1,11 +1,11 @@
+import { useState, useEffect } from 'react';
+import '../global/global.css';
 import Acessibilidade from './components/ui/Acessibilidade';
 import Header from './components/ui/Header';
 import Cadastro from './components/auth/Cadastro';
 import PainelBoasVindas from './components/auth/PainelBoasVindas';
 import Login from './components/auth/Login';
 import Footer from './components/ui/Footer';
-import { useState, useEffect } from 'react';
-
 
 function App() {
   const [telaAtual, setTelaAtual] = useState<"login" | "cadastro" >("cadastro")

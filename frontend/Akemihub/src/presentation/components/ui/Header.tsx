@@ -1,4 +1,5 @@
 import { Sun, Moon } from 'lucide-react';
+import './header.css';
 
 interface HeaderProps {
     alternarTema:() => void
