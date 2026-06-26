@@ -1,0 +1,16 @@
+#rodape-ancora {
+    position: absolute;
+    bottom: 0;
+    left: 1rem;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    z-index: 100;
+    transition: transform 0.6s ease-in-out;
+}
+
+#rodape-ancora p {
+    color: var(--text-color);
+    margin: 0;
+    font-size: 1.2rem;
+}

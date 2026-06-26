@@ -6,7 +6,7 @@ interface CadastroProps {
 
 function Cadastro({ className }: CadastroProps) {
     return(
-        <form className={`painel-cadastro ${className}`} aria-labelledby="painel-cadastro"> 
+          <form className={`painel painel-cadastro ${className}`} aria-labelledby="painel-cadastro"> 
         <h2 id="painel-cadastro" className="cadastro-title">Crie sua Conta</h2> 
         
         <fieldset className="form-cadastro-section"> 

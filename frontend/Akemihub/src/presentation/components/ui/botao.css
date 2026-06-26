@@ -1,0 +1,50 @@
+
+.form-cadastro-button, .botao-link, .tela-login-button {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding: 1.4rem 3rem;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--casdastro-background);
+    color: var(--button-text-color);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+
+}
+
+
+.form-cadastro-button:not(:focus-visible), .botao-link:not(:focus-visible), .tela-login-button:not(:focus-visible) {
+    outline: none;
+}
+
+.form-cadastro-button:focus-visible, .botao-link:focus-visible, .tela-login-button:focus-visible {
+    outline: 2px solid var(--input-border);
+    border-radius: 1rem;
+    transform: translateY(-2px);
+}
+
+.form-cadastro-button:hover, .botao-link:hover, .tela-login-button:hover {
+    cursor: pointer;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+.form-cadastro-button::before, .botao-link::before, .tela-login-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--button-background);
+    transition: width 0.5s ease-in-out;
+    z-index: -1;
+    border-radius: 1rem;
+}
+
+.form-cadastro-button:hover:before, .botao-link:hover:before, .tela-login-button:hover:before {
+    width: 100%;
+}

@@ -1,0 +1,46 @@
+
+.form-cadastro-input, .tela-login-input {
+    display: flex;
+    gap: 1.2rem;
+    background-color: transparent;
+    border: 2px solid var(--input-border);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    padding: 0 1.5rem;
+    outline: none;
+    width: 30rem;
+    height: 5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.form-cadastro-label, .tela-login-label {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    color: var(--text-color);
+    padding: 0.5rem;
+    pointer-events: none;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 1rem;
+    transition: 0.2s ease;
+}
+
+.form-cadastro-input:focus ~ .form-cadastro-label, 
+.form-cadastro-input:not(:placeholder-shown) ~ .form-cadastro-label {
+    top: 0;
+    font-size: 1.5rem;
+    background-color: var(--cadastro-background);
+    padding: 0 0.2rem;
+    outline: none; 
+    border-radius: 0.5rem;
+}
+
+.tela-login-input:focus ~ .tela-login-label, .tela-login-input:not(:placeholder-shown) ~ .tela-login-label {
+    top: 0;
+    font-size: 1.5rem;
+    background-color: var(--cadastro-background);
+    padding: 0 0.5rem;
+    outline: none;
+    border-radius: 0.5rem;
+}

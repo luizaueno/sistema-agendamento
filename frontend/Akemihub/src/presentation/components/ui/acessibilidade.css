@@ -11,29 +11,23 @@
 }
 
 
-.skip-link:focus {
-    position: absolute;
-    top: 3rem;    
-    left: 20rem; 
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 1rem;
-    z-index: 99999; 
-    overflow: visible;
-    clip-path: unset;
-    white-space: normal;
-    background-color: var(--login-background);
-    color: var(--text-color);
-    border-radius: 1rem;  
-    text-decoration: none;
-}
-
-
-.skip-link:focus:not(:focus-visible) {
-    outline: none;
-}
-
 .skip-link:focus-visible {
-    outline: 3px solid var(--input-border);
+    white-space: normal;
+    overflow: visible;
+    clip-path: none;
+    z-index: 400;
+    position: fixed;
+    left: 28rem;
+    top: 2rem;
+    height: auto;
+    width: auto;
+    margin: 0;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--cadastro-color);
+    border-radius: 1rem;
+    outline: 3px solid var(--input-border); 
 }
+
+

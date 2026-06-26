@@ -1,0 +1,56 @@
+#topo-ancora {
+    display: flex;
+    position: fixed;
+    align-items: center;
+    z-index: 20;
+    top: 1rem;
+    left: 1rem;
+    gap: 1.5rem;
+
+}
+
+
+.titulo-sistema {
+    color: var(--text-color);
+    font-family: "Changa", sans-serif;
+    font-weight: 700;
+    margin: 0;
+}
+
+#alternar-tema {
+    display: flex;
+    position: relative;
+    width: 8rem;
+    height: 4rem;
+    border-radius: 5rem;
+    background-color: var(--login-background);
+    border: 2px solid var(--login-background);
+    overflow: hidden;
+    outline: none;
+    box-shadow: inset  6px 4px 6px rgba(0, 0, 0, 0.4), inset -2px -2px 6px rgba(255, 255, 255, 0.1);
+}
+
+#alternar-tema:focus-visible {
+    outline: 2px solid var(--input-border)
+}
+
+#alternar-tema svg {
+    position: absolute;
+    left: 0.5rem;
+    background-color: var(--login-background);
+    width: 3rem;
+    height: 3rem;
+    padding: 0.5rem;
+    border-radius: 5rem;
+    color: var(--input-border);
+    box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.4), 
+        -3px -3px 6px rgba(255, 255, 255, 0.5);
+   
+    transform: translateX(0);
+    transition: transform 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+    }
+
+.modo-claro #alternar-tema svg {
+    transform: translateX(4rem);
+}

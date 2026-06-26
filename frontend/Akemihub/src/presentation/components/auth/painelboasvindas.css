@@ -1,0 +1,38 @@
+.painel-boas-vindas {
+    display: grid;
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    background-color: var(--login-background);
+}
+
+.conteudo-boas-vindas { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 4rem;
+    gap: 1rem;
+    color:  var(--text-color);
+}
+
+.painel-boas-vindas-titulo {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 3.2rem;
+}
+
+.painel-boas-vindas-texto {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    color: var(--text-color);
+    font-size: 1.6rem;
+    max-width: 30rem;
+}

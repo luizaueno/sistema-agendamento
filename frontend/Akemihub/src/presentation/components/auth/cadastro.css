@@ -1,0 +1,57 @@
+.painel-cadastro {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 30;
+    background-color: var(--cadastro-background);
+    color: var(--text-color);
+}
+
+.painel-cadastro-ativo {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0%);
+}
+
+.painel-cadastro-inativo {
+    opacity: 0;
+    visibility: hidden; 
+    transform: translateX(100%);
+}
+
+.form-cadastro-group {
+    position: relative;
+}
+
+.form-cadastro-section {
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    gap: 2rem;
+    border: none;
+
+}
+
+.cadastro-title {
+    display: flex;
+    margin: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 2.8rem;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    padding: 0;
+    margin: -1px;
+    white-space: nowrap;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
