@@ -1,5 +1,5 @@
 from domain.entities.Empresa import Empresa #  pasta entities, arquivo Empresa, importe a classe Empresa
-from domain.exceptions import EmpresaNaoEncontrada, CnpjJaCadastrado, LimiteAdmins
+from domain.exceptions import EmpresaNaoEncontrada, CnpjJaCadastrado, EmailJaCadastrado, LimiteAdmins
 from presentation.dto import CadastroDTO
 from utils import SenhaUtil
 from domain.service import UsuarioService
@@ -15,9 +15,12 @@ class EmpresaService:
         """
         Coordena o fluxo de criação de uma nova empresa.
         """
-        # Validação de Regra de Negócio: O CNPJ já existe?
+        # Validação de Regra de Negócio: O CNPJ e email já existe?
         # Chamamos o método que você criou abaixo. Se existir, ele lança erro e para aqui.
+     
+        self.buscar_por_email(dados.email)
         self.buscar_por_cnpj(dados.cnpj)
+
 
         # faz o hash da senha enviada no cadastro
         hash_gerado = SenhaUtil.SenhaUtil.hash(dados.senha)
@@ -39,7 +42,12 @@ class EmpresaService:
             "empresa": nova_empresa,
             "usuario": usuario_salvo
         }
-
+    
+    def buscar_por_email(self, email):
+        email_existente = self.repo_empresa.buscar_por_email(email) # self.repo, onde se salvou o repository, busca um email, se for igual lança um erro
+        if email_existente is not None:
+            raise EmailJaCadastrado("Esse Email já está cadastrado") 
+        
     def buscar_por_cnpj(self, cnpj_valido):
         """
         Verifica se um CNPJ já está no sistema para evitar duplicidade.
@@ -49,6 +57,7 @@ class EmpresaService:
         if empresa_existente is not None:
             raise CnpjJaCadastrado("Esse CNPJ já está cadastrado")
         # Se for None, a função termina em silêncio e o 'cadastrar' continua.
+
 
     def buscar_id(self, id):
         """
