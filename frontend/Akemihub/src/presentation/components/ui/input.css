@@ -1,6 +1,6 @@
 
 .form-cadastro-input, .tela-login-input {
-    display: flex;
+    display: block;
     gap: 1.2rem;
     background-color: transparent;
     border: 2px solid var(--input-border);
@@ -11,6 +11,17 @@
     width: 30rem;
     height: 5rem;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input-wrapper {
+    position: relative;
+}
+
+.form-cadastro-input:-webkit-autofill, .form-cadastro-input:autofill,  .tela-login-input:-webkit-autofill, .tela-login-input:autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--cadastro-background)inset;
+    -webkit-text-fill-color: var(--text-color) !important;
+    caret-color: var(--text-color);
 }
 
 .form-cadastro-label, .tela-login-label {
@@ -43,4 +54,29 @@
     padding: 0 0.5rem;
     outline: none;
     border-radius: 0.5rem;
+}
+
+/* Aplica a borda vermelha nos inputs com erro */
+.form-cadastro-input.input-com-erro, 
+.tela-login-input.input-com-erro {
+    border-color: var(--error-color);
+}
+
+/* Garante a borda vermelha também ao clicar/focar no campo com erro */
+.form-cadastro-input.input-com-erro:focus, 
+.tela-login-input.input-com-erro:focus {
+    border-color: var(--error-color);
+    outline: none;
+}
+
+/* Quando o input tem erro, a label que vem depois dele fica vermelha */
+.form-cadastro-input.input-com-erro ~ .form-cadastro-label, 
+.tela-login-input.input-com-erro ~ .tela-login-label {
+    color: var(--error-color);
+}
+
+/* Mantém a label vermelha mesmo quando o usuário clica no input que está com erro */
+.form-cadastro-input.input-com-erro:focus ~ .form-cadastro-label, 
+.tela-login-input.input-com-erro:focus ~ .tela-login-label {
+    color: var(--error-color);
 }

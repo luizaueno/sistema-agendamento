@@ -23,6 +23,10 @@
 
 .form-cadastro-group {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .form-cadastro-section {
@@ -55,3 +59,40 @@
     clip-path: inset(50%);
 }
 
+
+.container-erro {
+    display: flex;
+    align-items: flex-start; 
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+    color: var(--error-color);
+    width: 30rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.container-erro .icone {
+    font-style: normal; 
+    background-color: var(--error-color);
+    color: var(--cadastro-background);
+    border-color: 2px solid var(--error-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;  /* Impede que o ícone deforme caso o texto seja muito longo */
+    font-weight: bold;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.form-cadastro-erro {
+    color: inherit;
+    max-width: 100%;
+    display: block;
+    font-size: 1.3rem;
+}

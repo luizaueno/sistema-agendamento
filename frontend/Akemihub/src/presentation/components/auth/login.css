@@ -4,8 +4,8 @@
     background-color: var(--input-background);
     border: 1px solid var(--cadastro-background);
     transition:  transform 0.6s ease-in-out,
-        opacity 0.6s ease-in-out,
-        visibility 0.6s;
+    opacity 0.6s ease-in-out,
+    visibility 0.6s;
     z-index: 1;
 }
 
@@ -44,4 +44,41 @@
     font-weight: 700;
     color: var(--text-color);
     font-size: 2.8rem;
+}
+
+.container-erro {
+    display: flex;
+    align-items: flex-start; 
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+    color: var(--error-color);
+    width: 30rem;
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.container-erro .icone {
+    font-style: normal; 
+    background-color: var(--error-color);
+    color: var(--cadastro-background);
+    border-color: 2px solid var(--error-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;  /* Impede que o ícone deforme caso o texto seja muito longo */
+    font-weight: bold;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.form-login-erro {
+    color: inherit;
+    max-width: 100%;
+    display: block;
+    font-size: 1.3rem;
 }
