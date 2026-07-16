@@ -6,9 +6,10 @@ import { validarEmail, validarSenha } from '../../../core/validations/login'
 
 interface LoginProps {
     className: string
+    onLoginSuccess: () => void
 }
 
-function Login({ className }: LoginProps) {
+function Login({ className, onLoginSuccess }: LoginProps) {
 
     const [dadosLogin, setDadosLogin] = useState({ email: "", senha: ""})
 
@@ -49,7 +50,7 @@ function Login({ className }: LoginProps) {
 
         event.preventDefault()
 
-        const eEmail = validarEmail(dadosLogin.email)
+        {/*const eEmail = validarEmail(dadosLogin.email)
         const eSenha = validarSenha(dadosLogin.senha)
 
          setErroEmail(eEmail)
@@ -57,11 +58,11 @@ function Login({ className }: LoginProps) {
 
         if ( eEmail || eSenha) {
             return
-        }
+        }*/}
 
         try {
-            await axios.post('http://127.0.0', dadosLogin)
-            alert("Cadastro realizado com sucesso!")
+            // await axios.post('http://127.0.0', dadosLogin)
+            onLoginSuccess();
         }
         catch (error) {
             console.log("ERRO: ", error)

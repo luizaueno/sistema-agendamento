@@ -16,6 +16,8 @@ function Cadastro({ className }: CadastroProps) {
     const [erroEmail, setErroEmail] = useState("")
     const [erroSenha, setErroSenha] = useState("")
 
+    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error" > ("idle")
+
     function HandleChange(event: React.ChangeEvent<HTMLInputElement>) {
 
         const { name, value } = event.target
@@ -62,7 +64,7 @@ function Cadastro({ className }: CadastroProps) {
 
     async function HandleSubmit(event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) {
         event.preventDefault()
-
+        
         const eNome = validarNome(dadosCadastro.nome) || ""
         const eCNPJ = validarCNPJ(dadosCadastro.cnpj) || ""
         const eEmail = validarEmail(dadosCadastro.email) || ""
@@ -76,13 +78,25 @@ function Cadastro({ className }: CadastroProps) {
         if (eNome || eCNPJ || eEmail || eSenha) {
             return
         }
-
-        try {
+        
+        setStatus("loading")
+        
+         try {
             await axios.post('http://127.0.0', dadosCadastro)
-            alert("Cadastro realizado com sucesso!")
-        }
-        catch (error) {
+            setStatus("success")
+            setTimeout(() => {
+                setStatus("idle")
+            }, 3000)
+
+        } catch (error) {
+            // Se a API falhar (O botão muda para vermelho com "Erro ao cadastrar")
+            setStatus("error")
             console.log("ERRO: ", error)
+
+            // Retorna o botão ao estado padrão "Cadastrar" após 3 segundos
+            setTimeout(() => {
+                setStatus("idle")
+            }, 3000)
         }
     }
 
@@ -129,9 +143,33 @@ function Cadastro({ className }: CadastroProps) {
                     {erroSenha && (<div className="container-erro"><i className="icone">!</i><span className="form-cadastro-erro">{erroSenha}</span></div>)}
                 </div>
             </fieldset>
+        <button className="form-cadastro-button" disabled={status === 'loading'} data-status={status}
+        > 
+        {status === 'loading' && (
+            <>
+                <span className="loader"></span>
+                <span>Cadastrando...</span>
+            </>
+        )} 
 
-            <button className="form-cadastro-button" type="submit">Cadastrar</button>
-        </form>
+        {status === 'success' && (
+            <>
+                <span className="icon-success">✓</span>
+                <span>Sucesso!</span>
+            </>
+        )} 
+
+
+        {status === 'error' && (
+            <>
+                <span className="icon-error">✗</span>
+                <span>Erro ao cadastrar</span>
+            </>
+         )} 
+
+        {status === 'idle' && "Cadastrar"}
+    </button>
+</form>
     )
 }
 
