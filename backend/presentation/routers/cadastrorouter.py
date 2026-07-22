@@ -9,7 +9,7 @@ from domain.service.UsuarioService import UsuarioService
 rotas = APIRouter()
 
 
-@rotas.post("/cadastrar")
+@rotas.post("/cadastro-empresa")
 def cadastrar(dto: CadastroDTO):
     # 1. Criamos os dois repositórios (Empresa e Usuário)
     repo = EmpresaRepository()
