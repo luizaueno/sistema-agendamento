@@ -45,3 +45,23 @@ class EmpresaRepository:
                 if db_connection.is_connected():
                     cursor.close()
                     db_connection.close()
+
+    def buscar_por_email(self, email):
+            db_connection = criar_conexao()
+            if db_connection:
+                try:
+                    cursor = db_connection.cursor(dictionary=True)
+                    sql = "SELECT * FROM Usuario WHERE email = %s"
+                    cursor.execute(sql,(email,))
+                    resultado = cursor.fetchone() 
+                    return resultado
+                
+                except Exception as e:
+                 
+                    print(f"Erro crítico ao buscar no banco: {e}")
+                    return None
+                
+                finally:
+                    if db_connection.is_connected():
+                        cursor.close()
+                        db_connection.close()
