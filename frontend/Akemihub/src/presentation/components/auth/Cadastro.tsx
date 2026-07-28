@@ -82,7 +82,7 @@ function Cadastro({ className }: CadastroProps) {
         setStatus("loading")
         
          try {
-            await axios.post('http://127.0.0', dadosCadastro)
+            await axios.post('http://localhost:8000/cadastro-empresa', dadosCadastro)
             setStatus("success")
             setTimeout(() => {
                 setStatus("idle")

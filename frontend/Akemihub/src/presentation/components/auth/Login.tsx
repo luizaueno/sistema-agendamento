@@ -13,7 +13,7 @@ function Login({ className, onLoginSuccess }: LoginProps) {
 
     const [dadosLogin, setDadosLogin] = useState({ email: "", senha: ""})
 
-    const [erroEmail, setErroEmail] = useState("")
+    const [erroEmail, setErroEmail] = useState<string | null>(null)
     const [erroSenha, setErroSenha] = useState("")
 
     function HandleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -50,19 +50,20 @@ function Login({ className, onLoginSuccess }: LoginProps) {
 
         event.preventDefault()
 
-        {/*const eEmail = validarEmail(dadosLogin.email)
+        const eEmail = validarEmail(dadosLogin.email)
         const eSenha = validarSenha(dadosLogin.senha)
 
-         setErroEmail(eEmail)
+        setErroEmail(eEmail)
         setErroSenha(eSenha)
 
         if ( eEmail || eSenha) {
             return
-        }*/}
+        }
 
         try {
-            // await axios.post('http://127.0.0', dadosLogin)
-            onLoginSuccess();
+            const resposta = await axios.post('http://localhost:8000/login', dadosLogin)
+            localStorage.setItem("token", resposta.data.token)
+            onLoginSuccess()
         }
         catch (error) {
             console.log("ERRO: ", error)

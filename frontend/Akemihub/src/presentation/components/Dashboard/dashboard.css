@@ -1,0 +1,153 @@
+.dashboard-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.dashboard-sidebar {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: 100%;
+    padding: 2rem;
+    gap: 1rem;
+    background-color: var(--login-background);
+    border-right: 2px solid var(--cadastro-background);
+    transition: width 0.3s ease, padding 0.3s ease;
+}
+
+.dashboard-sidebar.aberto {
+   width: 28rem;
+}
+
+.dashboard-sidebar.recolhido {
+   width: 11rem; 
+}
+
+.dashboard-sidebar.recolhido .titulo-sistema {
+    display: none;
+}
+
+.sidebar-btn {
+    margin-top: 5rem;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.dashboard-sidebar.recolhido .sidebar-btn {
+    justify-content: center;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 2rem;
+    gap: 1.5rem;
+}
+
+.nav-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  z-index: 1;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  color: var(--text-color);
+    overflow: hidden;
+  transition: 0.9s color ease;
+}
+
+.nav-btn:hover, 
+.sidebar-links .nav-btn.active {
+    color: var(--button-text-color);
+   
+}
+
+.nav-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%; 
+    height: 100%;
+    background-color: var(--button-background);
+    z-index: -1; 
+    border-radius: 1.5rem;
+    transition: width 0.4s ease-in-out;
+}
+
+.nav-btn:hover::before,
+.sidebar-links .nav-btn.active::before {
+    width: 100%;
+}
+
+.dashboard-sidebar.recolhido .nav-btn {
+    padding: 1rem 0;
+    justify-content: center;
+}
+
+.logout-button {
+    position: relative; 
+    overflow: hidden;    
+    z-index: 1; 
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: transparent;
+    border: 2px solid var(--cadastro-background);
+    color: var(--text-color);
+    padding: 1rem;
+    border-radius: 1.5rem;
+    cursor: pointer;
+    margin-top: auto;
+    white-space: nowrap;
+    transition: color 0.5s ease, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.logout-button:hover {
+    background-color: transparent; 
+    color: var(--button-text-color);
+    border-color: var(--button-background); 
+}
+
+.logout-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0%; 
+    height: 100%;
+    background-color: var(--button-background);
+    z-index: -1; 
+    border-radius: 1.5rem;
+    transition: width 0.4s ease-in-out;
+}
+
+.logout-button:hover::before {
+    width: 100%;
+}
+
+.dashboard-sidebar.recolhido .logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem 0;
+    width: 100%;
+    border: none;
+}
+
+

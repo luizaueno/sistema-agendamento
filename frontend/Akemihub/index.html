@@ -5,6 +5,15 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>akemihub</title>
+    <script>
+    (function () {
+      const temaSalvo = localStorage.getItem('tema');
+      // Se não houver nada salvo, assume escuro (true). Se for light, adiciona a classe na hora:
+      if (temaSalvo === 'light') {
+        document.documentElement.classList.add('modo-claro');
+      }
+    })();
+  </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,4 +1,4 @@
-export function validarNome(nome: string): string {
+export function validarNome(nome: string): string | null {
     if (nome == '') {
         return "Informe o nome da empresa"
     }
@@ -10,7 +10,7 @@ export function validarNome(nome: string): string {
     }
 }
 
-export function validarCNPJ(cnpj_sujo: string): string {
+export function validarCNPJ(cnpj_sujo: string): string | null {
     const cnpj_limpo = cnpj_sujo.replace(/[^0-9]/g, "")
     if (cnpj_limpo == '') {
         return "Informe um CNPJ"
@@ -35,7 +35,6 @@ export function validarEmail(email: string): string | null {
         return "Formato incorreto do email"
     }
 
-    // Corrigido: adicionado [0][0] para verificar a primeira letra antes do @
     if (!email_dividido[0] || !/[a-zA-Z]/.test(email_dividido[0][0])) {
         return "Email deve começar com letra"
     }
