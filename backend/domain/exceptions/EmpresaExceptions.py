@@ -1,17 +1,4 @@
-from domain.exceptions.ExceptionCampoVazio import CampoObrigatorioVazio
-
-class NomeInvalido(Exception):
-    pass
-
-class CnpjInvalido(Exception):
-    pass
-
-class EmailInvalido(Exception):
-    pass
-
-class SenhaInvalida(Exception):
-    pass
-
+from domain.exceptions import CampoObrigatorioVazio, NomeCurto, CnpjInvalido, EmailInvalido, SenhaInvalida
 class CnpjJaCadastrado(Exception):
     pass
 

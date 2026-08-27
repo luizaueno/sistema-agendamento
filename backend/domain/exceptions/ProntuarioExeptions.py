@@ -1,4 +1,4 @@
-from domain.exceptions.ExceptionCampoVazio import CampoObrigatorioVazio
+from domain.exceptions import CampoObrigatorioVazio
 
 class IdInvalido(Exception):
     pass

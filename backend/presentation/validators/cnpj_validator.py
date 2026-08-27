@@ -4,8 +4,7 @@ from typing import Annotated
 from pydantic import AfterValidator
 
 def validar_cnpj(v, mode="before"):
-    if not isinstance(v, str):
-        raise CnpjInvalido("Formato do cnpj incorreto")
+ 
     cnpj_limpo = limpar_cnpj(v)
     if cnpj_limpo == "":
         raise CampoObrigatorioVazio("Campo obrigatório não preenchido")

@@ -1,36 +1,34 @@
-from infra.conexao_db import criar_conexao
 from enum import Enum
 
 class UsuarioRepository:
-    def salvar(self, usuario):
-        db_connection = criar_conexao() # tenta ganhar a conexao aberta da pasta infra
-        if db_connection:
+    def __init__(self, db_connection):
+        self.db_connection = db_connection
+
+    def salvar(self, usuario, db_connection=None):
+        connection = db_connection or self.db_connection
+        if connection:
             try:
-                cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
+                cursor = connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
                 sql = "INSERT INTO Usuario(nome, email, senha, perfil, id_empresa) VALUES (%s, %s, %s, %s, %s)"
-                perfil_valor = usuario.perfil.value if hasattr(usuario.perfil, 'value') else usuario.perfil
+                perfil_valor = getattr(usuario.perfil, 'value', usuario.perfil) # Se tiver 'value', pega o valor. Se não tiver, usa o próprio perfil como padrão.
                 valores = (usuario.nome, usuario.email, usuario.senha, perfil_valor, usuario.id_empresa)
 
                 cursor.execute(sql,valores)  # envia o comando  e os dados ao banco
-                db_connection.commit() # confirma e salva permanentemente
+            
+                id_gerado = cursor.lastrowid
                 print(f"✅ Sucesso! {usuario.email} salvo.")
-
-            except Exception as e:
-                print(f"Erro no Repository: {e}")
-
+                return id_gerado
+            
             finally:
                 # Garante que o banco não fique sobrecarregado
-                if db_connection.is_connected():
-                    cursor.close()
-                    db_connection.close()
-                    print("✅ Conexão encerrada com segurança.")
+                cursor.close()
         else:
-            print("O Repository parou porque a Infra falhou.")
+            print("O Repository parou porque a conexão com o banco de dados falhou.")
 
 
-    def buscar_por_email(self, email):
-        db_connection = criar_conexao()
-        if db_connection:
+    def buscar_por_email(self, email, db_connection=None):
+        connection = db_connection or self.db_connection
+        if connection:
             try:
                 cursor = db_connection.cursor(dictionary=True)
                 sql = "SELECT * FROM Usuario WHERE email = %s"
@@ -44,6 +42,5 @@ class UsuarioRepository:
                 return None
             
             finally:
-                if db_connection.is_connected():
-                    cursor.close()
-                    db_connection.close()
+                cursor.close()
+                    

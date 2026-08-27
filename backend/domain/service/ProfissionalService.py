@@ -1,33 +1,100 @@
+import datetime
+import secrets
 import bcrypt
-from domain.entities.Profissional import Profissional #  pasta entities, arquivo profissional, importe a classe profissional
-from domain.exceptions.UsuarioExceptions import UsuarioNaoEncontrado, CampoObrigatorioVazio, EmailInvalido, SenhaInvalida, EmailJaCadastrado
+
+from domain.entities.Profissional import Profissional
+from domain.entities.Usuario import Usuario
+from domain.entities.ConviteAtivacao import ConviteAtivacao
+from domain.exceptions.EmpresaExceptions import CnpjJaCadastrado
+from domain.exceptions.SharedExeptions import CampoObrigatorioVazio, ErroConexaobd
+from domain.exceptions.UsuarioExceptions import EmailJaCadastrado
+from infra.conexao_db import criar_conexao
+from repository.Convite_Repository import ConviteRepository
+from repository.Profissional_Repository import ProfissionalRepository
+from repository.Usuario_Repository import UsuarioRepository
+
 
 class ProfissionalService:
-    def __init__(self, profissional_repository):
-        self.repo = profissional_repository # salva o repository para se aplicar as regras
+    def __init__(self, db_connection):
+        self.db_connection = db_connection 
 
-    def buscar_por_email(self, email):
-        email_existente = self.repo.buscar_por_email(email) # self.repo, onde se salvou o repository, busca um email, se for igual lança um erro
+        self.repo = ProfissionalRepository(db_connection) 
+        self.convite_repo = ConviteRepository(db_connection)
+        self.usuario_repo = UsuarioRepository(db_connection)
+
+    def verificar_duplicidade(self, cnpj, email, db_connection):
+        cnpj_existente = self.repo.buscar_por_cnpj(cnpj, db_connection)
+        if cnpj_existente is not None:
+            raise CnpjJaCadastrado("Este CNPJ já está cadastrado no sistema")
+        
+        email_existente = self.usuario_repo.buscar_por_email(email, db_connection)
         if email_existente is not None:
-            raise EmailJaCadastrado("Esse Email já está cadastrado") 
-    
-    def cadastrar(self, nome, email, senha, perfil, profissao, cor, id=None):
-        if nome=="" or perfil=="" or profissao=="" or cor=="":
-            raise CampoObrigatorioVazio("Campo Obrigatório não preenchido")
-        if not "@" in email or not ".com" in email:
-            raise EmailInvalido("Email Inválido")
-        self.buscar_por_email(email)
-        if len(senha) < 8:
-            raise SenhaInvalida("Senha Inválida") 
-        if not any(l.islower() for l in senha): # se não tiver qualquer minuscula
-            raise SenhaInvalida("Senha Inválida")
-        if not any(l.isupper() for l in senha): # se não tiver qualquer maiuscula
-            raise SenhaInvalida("Senha Inválida")       
-        if not any(l in "#@!" for l in senha): # se não tiver qualquer caractere especial
-            raise SenhaInvalida("Senha Inválida")  
-        
-        senha_banco = bcrypt.hashpw(senha.encode(), bcrypt.gensalt())
-        login = Profissional(nome, email, senha_banco, perfil, profissao, cor)
-        self.repo.salvar(login) # salva as informações de login com a senha 
+            raise EmailJaCadastrado("Este e-mail já está cadastrado no sistema")
 
+    def cadastrar(self, dto, id_empresa=1):
+        campos = [
+            str(dto.nome), 
+            str(dto.cnpj), 
+            str(dto.especialidade), 
+            str(dto.telefone), 
+            str(dto.email), 
+            str(dto.cor)
+        ]
+        if not all(campo.strip() for campo in campos):
+            raise CampoObrigatorioVazio("Campo obrigatório não preenchido")
         
+
+        if self.db_connection is None:
+            raise ErroConexaobd("Não foi possível estabelecer conexão com o banco de dados")
+
+        try:
+            self.verificar_duplicidade(str(dto.cnpj), str(dto.email), self.db_connection)
+
+      
+            usuario_dados = Usuario(
+                nome=str(dto.nome),
+                senha= "",
+                email=str(dto.email),
+                perfil="profissional",
+                id_empresa=id_empresa
+            )
+      
+            id_usuario = self.usuario_repo.salvar(usuario_dados, self.db_connection)
+
+            profissional_dados = Profissional(
+                nome=str(dto.nome),
+                cnpj=str(dto.cnpj),
+                especialidade=str(dto.especialidade),
+                telefone=str(dto.telefone),
+                cor=str(dto.cor),
+                id_usuario=id_usuario,
+                id_empresa=id_empresa
+            )
+            self.repo.salvar(profissional_dados, self.db_connection)
+
+            token = secrets.token_urlsafe(32)
+            criado_em = datetime.datetime.now()
+            expira_em = criado_em + datetime.timedelta(days=3)
+            
+            convite = ConviteAtivacao(
+                token=token,
+                criado_em=criado_em,
+                expira_em=expira_em,
+                utilizado=False,
+                id_usuario=id_usuario
+            )
+            self.convite_repo.salvar(convite, self.db_connection)
+            
+            self.db_connection.commit()
+
+            return {
+                "token_ativacao": token,
+                "expira_em": expira_em
+            }
+
+        except Exception:
+            self.db_connection.rollback()
+            raise 
+
+        finally:
+            self.db_connection.close()

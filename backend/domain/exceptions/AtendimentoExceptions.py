@@ -1,4 +1,4 @@
-from domain.exceptions.ExceptionCampoVazio import ExceptionCampoObrigatorioVazio
+from domain.exceptions import CampoObrigatorioVazio
 
 class ProfissionalInexistente(Exception):
     pass
