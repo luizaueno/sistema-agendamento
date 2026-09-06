@@ -43,4 +43,19 @@ class UsuarioRepository:
             
             finally:
                 cursor.close()
-                    
+
+    def atualizar_senha(self, id_usuario, nova_senha, db_connection=None):
+        # Substitui o campo de senha vazio pela senha definitiva criptografada via Bcrypt.
+        connection = db_connection or self.db_connection
+        if connection:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                # Altera a senha na tabela Usuario onde o id bate com o recuperado do JWT
+                sql = "UPDATE Usuario SET senha = %s WHERE id = %s"
+                valores = (nova_senha, id_usuario)
+                cursor.execute(sql, valores)
+                print(f"✅ Senha do usuário ID {id_usuario} atualizada com sucesso no banco.")
+            finally:
+                cursor.close()
+        else:
+            print("O Repository parou porque a conexão com o banco de dados falhou.")

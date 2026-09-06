@@ -8,23 +8,24 @@ from domain.service.UsuarioService import UsuarioService
 
 rotas = APIRouter()
 
-
 @rotas.post("/cadastro-empresa")
 def cadastrar(dto: CadastroDTO):
-    # 1. Criamos os dois repositórios (Empresa e Usuário)
+    # Instancia os repositórios necessários
     repo = EmpresaRepository()
     repo_usuario = UsuarioRepository()
     
-    # 2. Criamos o service do usuário
+    # Instancia o serviço de apoio do usuário
     usuario_service = UsuarioService(repo_usuario)
     
-    # 3. Agora passamos tudo o que a EmpresaService precisa
+    # Instancia o serviço principal da regra de negócio
     empresa1 = EmpresaService(repo, repo_usuario, usuario_service)
     
+    # Se qualquer service lançar uma exceção mapeada, o main.py intercepta e muda o Status 500 para o correto!
     response = empresa1.cadastrar(dto)
+    
     empresa_criada = response["empresa"]
     return CadastroResponse(
         nome=empresa_criada.nome, 
         cnpj=empresa_criada.cnpj, 
         email=empresa_criada.email
-    ) 
+    )

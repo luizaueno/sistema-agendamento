@@ -6,10 +6,10 @@ from domain.service.UsuarioService import UsuarioService
 
 rotas = APIRouter()
 
-
 @rotas.post("/login")
 def fazer_login(dto: LoginDTO):
    repo = UsuarioRepository()
    usuario1 = UsuarioService(repo)
-   response =  usuario1.fazer_login(dto.email, dto.senha)
+   response = usuario1.fazer_login(dto.email, dto.senha)
+   
    return response

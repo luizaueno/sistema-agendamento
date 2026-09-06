@@ -6,7 +6,6 @@ class ConviteRepository:
     def salvar(self, convite, db_connection=None):
         connection = db_connection or self.db_connection
         if connection:
-            cursor = connection.cursor(dictionary=True)
             try:
                 cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
                 sql = "INSERT INTO convite_ativacao(token, criado_em, expira_em, utilizado, id_usuario) VALUES (%s, %s, %s, %s, %s)"
@@ -44,3 +43,18 @@ class ConviteRepository:
         finally:
             if cursor is not None:
                 cursor.close()
+
+def marcar_como_utilizado(self, token, db_connection=None):
+    # Bloqueio de Reuso: Altera a coluna utilizado para True (ou 1) para queimar o token.
+        
+        connection = db_connection or self.db_connection
+        if connection:
+            try:
+                cursor = connection.cursor(dictionary=True)
+                sql = "UPDATE convite_ativacao SET utilizado = True WHERE token = %s"
+                cursor.execute(sql, (token,))
+                print("✅ Token de convite marcado como utilizado no banco de dados.")
+            finally:
+                cursor.close()
+        else:
+            print("O Repository parou porque a conexão com o banco de dados falhou.")
