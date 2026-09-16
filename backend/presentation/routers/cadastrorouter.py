@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from presentation.dto.CadastroDTO import CadastroDTO
 from repository.Empresa_Repository import EmpresaRepository
 from domain.service.EmpresaService import EmpresaService
@@ -6,13 +6,15 @@ from domain.responses.CadastroResponse import CadastroResponse
 from repository.Usuario_Repository import UsuarioRepository
 from domain.service.UsuarioService import UsuarioService
 
+from infra.conexao_db import criar_conexao
+
 rotas = APIRouter()
 
 @rotas.post("/cadastro-empresa")
-def cadastrar(dto: CadastroDTO):
+def cadastrar(dto: CadastroDTO, db = Depends(criar_conexao)):
     # Instancia os repositórios necessários
-    repo = EmpresaRepository()
-    repo_usuario = UsuarioRepository()
+    repo = EmpresaRepository(db_connection=db)
+    repo_usuario = UsuarioRepository(db_connection=db)
     
     # Instancia o serviço de apoio do usuário
     usuario_service = UsuarioService(repo_usuario)

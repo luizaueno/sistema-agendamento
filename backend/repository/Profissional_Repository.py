@@ -23,7 +23,7 @@ class ProfissionalRepository:
         connection = db_connection or self.db_connection
         if connection:
             try:
-                cursor = db_connection.cursor(dictionary=True)
+                cursor = connection.cursor(dictionary=True)
                 sql = "SELECT * FROM Profissional WHERE cnpj = %s"
                 cursor.execute(sql,(cnpj,))
                 resultado = cursor.fetchone() # traz o resultado do banco

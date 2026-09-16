@@ -7,7 +7,7 @@ class ConviteRepository:
         connection = db_connection or self.db_connection
         if connection:
             try:
-                cursor = db_connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
+                cursor = connection.cursor(dictionary=True) # se usa dicionario para acessar o nome e nao posição dos dados
                 sql = "INSERT INTO convite_ativacao(token, criado_em, expira_em, utilizado, id_usuario) VALUES (%s, %s, %s, %s, %s)"
                 valores = (convite.token, convite.criado_em, convite.expira_em, convite.utilizado, convite.id_usuario)
 
@@ -22,12 +22,10 @@ class ConviteRepository:
             print("O Repository parou porque a conexão com o banco de dados falhou.")
 
     def buscar_por_token(self, token, db_connection=None):
-
         connection = db_connection or self.db_connection
-    
         if not connection:
             print("O Repository parou porque a conexão com o banco de dados falhou.")
-        return None
+            return None
 
         cursor = None 
         try:
@@ -44,9 +42,9 @@ class ConviteRepository:
             if cursor is not None:
                 cursor.close()
 
-def marcar_como_utilizado(self, token, db_connection=None):
-    # Bloqueio de Reuso: Altera a coluna utilizado para True (ou 1) para queimar o token.
-        
+    def marcar_como_utilizado(self, token, db_connection=None):
+        # Bloqueio de Reuso: Altera a coluna utilizado para True (ou 1) para queimar o token.
+            
         connection = db_connection or self.db_connection
         if connection:
             try:
