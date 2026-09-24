@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import {  NavLink, Outlet } from "react-router-dom";
 import './dashboard.css';
-import { Menu, Calendar, Users, LogOut, ShieldAlert} from 'lucide-react' // Adicionados os ícones para o menu
+import { Menu, Calendar, Users, UserRoundGroup, LogOut} from 'lucide-react' 
 import Header from '../ui/Header';
 
 interface DashboardProps {
@@ -17,7 +17,7 @@ export const Dashboard = ({ onLogout, alternarTema, isDarkMode, perfil }: Dashbo
     return (
         <div className="dashboard-container">
             <aside className={`dashboard-sidebar ${isMenuOpen ? 'aberto' : 'recolhido'}`} aria-label="Menu lateral">
-                {/* O seu Header original de volta ao topo exato da barra lateral */}
+            
                 <Header alternarTema={alternarTema} escuro={isDarkMode} />
                 
                 <button className="sidebar-btn" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-expanded={isMenuOpen} >
@@ -25,25 +25,24 @@ export const Dashboard = ({ onLogout, alternarTema, isDarkMode, perfil }: Dashbo
                 </button>
                 
                 <nav className="sidebar-links">
-                    {/* Link corrigido com o ícone da Agenda */}
                     <NavLink to="/dashboard/agenda" className="nav-btn"> 
                         <Calendar size={20} />
                         {isMenuOpen && <span className="link-label">Agenda</span>}
                     </NavLink>
                     
-                    {/* Link corrigido com o ícone de Pacientes */}
+
                     <NavLink to="/dashboard/pacientes" className="nav-btn"> 
                         <Users size={20} />
                         {isMenuOpen && <span className="link-label">Pacientes</span>}
                     </NavLink>
-                    
-                    {/* Link corrigido com o ícone de Profissionais (Apenas ADMIN) */}
-                    {perfil === 'ADMIN' && (
+
+                    {(perfil?.toUpperCase() === 'ADMIN' || localStorage.getItem('perfil')?.toUpperCase() === 'ADMIN') && (
                         <NavLink to="/dashboard/profissionais" className="nav-btn"> 
-                            <ShieldAlert size={20} />
+                            <UserRoundGroup size={20}/>
                             {isMenuOpen && <span className="link-label">Profissionais</span>}
                         </NavLink>
                     )}
+
                 </nav>
                 <button className="logout-button" onClick={onLogout}>
                      <LogOut size={20} />

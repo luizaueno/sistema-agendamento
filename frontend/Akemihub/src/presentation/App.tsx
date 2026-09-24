@@ -10,11 +10,12 @@ import Cadastro from './components/auth/Cadastro'
 import PainelBoasVindas from './components/auth/PainelBoasVindas'
 import Login from './components/auth/Login'
 import Footer from './components/ui/Footer'
+import CreateProfissional from './components/Profissionais/CreateProfissional'
 
 import { Dashboard } from './components/Dashboard/Dashboard'
 import { RotaProtegida } from '../infra/RotaProtegida'
 
-// 1. Contexto de Tema
+
 interface TemaContextData {
   isDarkMode: boolean
   inverterTema: () => void
@@ -181,7 +182,7 @@ const router = createBrowserRouter([
               },
               {
                 path: "profissionais",
-                element: <div>Painel de Profissionais</div> // Substitua pelo seu componente <Profissionais /> real
+                element: <CreateProfissional/>
               }
             ]
           }

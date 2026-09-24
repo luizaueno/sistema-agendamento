@@ -1,0 +1,140 @@
+.profissional-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    margin: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 2.8rem;
+}
+
+.subtitle {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 2.8rem;
+}
+
+.btn-cadastro {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding: 1.6rem 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}
+
+.container-formulario {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.conteudo-formulario {
+    position: relative;
+    background-color: var(--cadastro-background);
+    padding: 3rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 68rem; 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    gap: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-input {
+    width: 48%; 
+    height: 5rem;
+    background-color: transparent;
+    border: 2px solid var(--input-border);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    outline: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-input-tag {
+    width: 48%; 
+    height: 5rem;
+    display: flex;
+    align-items: center; 
+    color: var(--text-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    border: none;            
+    box-shadow: none;        
+    background: transparent;  
+    padding: 0;               
+}
+
+/* Esse bloco segura a grade de 48% ao lado do texto de Horários */
+.bloco-input-cor {
+    width: 48%;
+    display: flex;
+    flex-direction: column; /* Empilha o input de cor e o texto de aviso */
+    gap: 0.5rem; /* Espaço curto entre o input e o textinho de aviso */
+}
+
+/* O input de cor agora se adapta ao tamanho do bloco pai */
+.form-input-color.picker {
+    width: 100%; /* Ocupa a largura total dos 48% reservados para ele */
+    height: 5rem;
+    background-color: transparent;
+    border: 2px solid var(--input-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem;
+}
+
+/* O texto de aviso sutil */
+.aviso-cor {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem; /* Um tamanho menor para não competir com as labels */
+    color: var(--text-color);
+    opacity: 0.7; /* Deixa o texto levemente apagado/discreto */
+    line-height: 1.4;
+}
+
+
+.form-cadastro-btn {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    position: relative;
+    padding: 1.6rem 0;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}

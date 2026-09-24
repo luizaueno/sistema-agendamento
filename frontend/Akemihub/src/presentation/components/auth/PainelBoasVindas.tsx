@@ -5,7 +5,7 @@ interface PainelProps {
     alternarTela: (tela: "login" | "cadastro") => void
 }
 
-function PainelBoasVindas({telaAtual, alternarTela}: PainelProps) {
+function PainelBoasVindas({alternarTela}: PainelProps) {
     return (
         <div className="painel-boas-vindas" aria-labelledby="boas-vindas-titulo" role="region">
             
