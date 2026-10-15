@@ -8,7 +8,7 @@ interface DashboardProps {
     onLogout: () => void       
     alternarTema: () => void   
     isDarkMode: boolean  
-    perfil: 'ADMIN' | 'PROFISSIONAL'      
+    perfil: 'ADMIN' | 'PROFISSIONAL' | 'PROFISSIONAL-ADMIN'   
 }
 
 export const Dashboard = ({ onLogout, alternarTema, isDarkMode, perfil }: DashboardProps) => {
@@ -38,7 +38,7 @@ export const Dashboard = ({ onLogout, alternarTema, isDarkMode, perfil }: Dashbo
                     </NavLink>
                     
                     {/* Link corrigido com o ícone de Profissionais (Apenas ADMIN) */}
-                    {perfil === 'ADMIN' && (
+                    {(perfil === 'ADMIN' ||  perfil === 'PROFISSIONAL-ADMIN') && (
                         <NavLink to="/dashboard/profissionais" className="nav-btn"> 
                             <ShieldAlert size={20} />
                             {isMenuOpen && <span className="link-label">Profissionais</span>}
@@ -57,3 +57,5 @@ export const Dashboard = ({ onLogout, alternarTema, isDarkMode, perfil }: Dashbo
         </div>
     )
 }
+
+export default Dashboard

@@ -26,13 +26,20 @@
     transform: translateY(-2px);
 }
 
-.form-cadastro-button:hover, .botao-link:hover, .tela-login-button:hover {
+.form-cadastro-button:hover {
     cursor: pointer;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
 }
 
-.form-cadastro-button::before, .botao-link::before, .tela-login-button::before {
+ .botao-link:hover, .tela-login-button:hover {
+    cursor: pointer;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    background-color: var(--button-background);
+    transition: 0.2s ease;
+ }
+
+.form-cadastro-button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -44,6 +51,8 @@
     z-index: -1;
     border-radius: 1rem;
 }
+
+
 
 .form-cadastro-button:hover:before, .botao-link:hover:before, .tela-login-button:hover:before {
     width: 100%;

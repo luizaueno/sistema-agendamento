@@ -1,0 +1,148 @@
+.accordion-container {
+  width: 100%;
+  max-width: 115rem;
+  margin: 1rem;
+}
+
+.accordion-item {
+  border: 1px solid var(--input-border);
+  border-radius: 3rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+/* 1. Botão do cabeçalho que separa o conteúdo da seta */
+.accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: var(--cadastro-background);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+
+.accordion-header:hover {
+  background-color: var(--cadastro-background);
+}
+
+/* 2. Expande o conteúdo interno do botão e afasta o Nome do Status */
+.accordion-header-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important; 
+  flex-grow: 1 !important;                  
+  padding-right: 2.5rem !important; /* Margem de segurança antes da seta */         
+}
+
+/* Nome do profissional fixado no canto esquerdo */
+.profissional-nome {
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  color: var(--text-color);
+}
+
+/* Alinha o texto do status colado ao lado da sua bolinha */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem; /* Espaço entre a palavra e a bolinha */
+}
+
+/* Estilo para a frase por extenso (ex: "Conta ativa") */
+.status-texto {
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-family: "Open Sans", sans-serif;
+  color: var(--text-color); 
+}
+
+/* Base geométrica da bolinha indicadora */
+.indicador-cor {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Cores atreladas às classes dinâmicas do seu JSX */
+.indicador-cor.verde { background-color: #2ecc71; }      /* Conta ativa */
+.indicador-cor.vermelho { background-color: #e74c3c; }   /* Conta desativada */
+.indicador-cor.amarelo { background-color: #f1c40f; }    /* Convite enviado */
+
+/* Seta indicativa no extremo canto direito */
+.accordion-seta {
+  font-size: 12px;
+  color: var(--input-border);
+  flex-shrink: 0;
+}
+
+/* 3. Conteúdo interno revelado ao abrir (Alinhamento em colunas retas) */
+.accordion-content {
+  display: grid;
+  grid-template-columns: 10rem 1fr; 
+  gap: 1rem 1.2rem; 
+  padding: 1.5rem 2rem;
+  background-color: var(--cadastro-background);
+  border-top: 1px solid var(--input-border);
+  font-size: 1.4rem;
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* Remove margens e transforma as tags <p> em meros containers estruturais */
+.accordion-content p {
+  margin: 0;
+  display: contents;
+}
+
+/* Esconde o container de ações por padrão */
+.acoes-container {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: auto; /* Empurra os ícones para colar antes do status */
+  margin-right: 1.5rem; /* Afasta os ícones do texto do status */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Mostra as ações ao passar o mouse no card ou no cabeçalho */
+.accordion-item:hover .acoes-container,
+.accordion-header:hover .acoes-container {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Estilo base dos botões que envolvem os ícones do Lucide */
+.btn-acao {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color); /* Herda a cor do seu texto padrão */
+  transition: all 0.2s ease;
+}
+
+/* Efeito Hover - Botão Editar (Apenas muda a cor do ícone e adiciona um fundo leve) */
+.btn-editar:hover {
+  background-color: var(--cadastro-background);
+  color: #3498db; /* Azul moderno */
+}
+
+/* Efeito Hover - Botão Deletar (Fundo vermelho claro e ícone vermelho) */
+.btn-deletar:hover {
+  background-color: var(--cadastro-background); 
+  color: #e74c3c; /* Vermelho moderno */
+}
+

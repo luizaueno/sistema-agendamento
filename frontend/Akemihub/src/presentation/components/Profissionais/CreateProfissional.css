@@ -1,0 +1,260 @@
+.painel-profissionais-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+.profissional-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    margin: 1rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 2.8rem;
+}
+
+.subtitle {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 2.8rem;
+}
+
+.btn-cadastro-novo {
+    display: block;
+    margin: 2rem;
+    margin-left: 60rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding: 1.6rem 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}
+
+.btn-cadastro {
+    display: block;
+    margin-left: 43rem;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    position: relative;
+    padding: 1.6rem 2rem;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}
+
+.container-formulario {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.conteudo-formulario {
+    position: relative;
+    background-color: var(--cadastro-background);
+    padding: 3rem;
+    border-radius: 0.5rem;
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 68rem; 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    gap: 1.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Modificação estrutural para agrupar o input e o erro verticalmente sem quebrar as linhas */
+.form-cadastro-group {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-input {
+    width: 100%; /* Ajustado para ocupar 100% da caixinha flexbox de 48% */
+    height: 5rem;
+    background-color: transparent;
+    border: 2px solid var(--input-border);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    padding: 0 1rem;
+    outline: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box; /* Previne o padding de vazar a largura do input */
+}
+
+/* Tratamento do Autofill para os novos inputs do formulário */
+.form-input:-webkit-autofill, 
+.form-input:autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--cadastro-background) inset !important;
+    -webkit-text-fill-color: var(--text-color) !important;
+    caret-color: var(--text-color) !important;
+}
+
+/* Estilo do input com erro */
+.form-input.input-com-erro {
+    border-color: var(--error-color);
+   
+}
+
+/* Estilo do container das mensagens de erro */
+.container-erro {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--error-color);
+}
+
+.container-erro .icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--error-color);
+    color: #fff;
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.form-cadastro-erro {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.form-input-tag {
+    width: 48%; 
+    height: 5rem;
+    display: flex;
+    align-items: center; 
+    color: var(--text-color);
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.6rem;
+    border: none;            
+    box-shadow: none;        
+    background: transparent;  
+    padding: 0;               
+}
+
+/* 1. Seleciona especificamente a DIV que é pai direto do input de Email */
+div:has(> .form-input[type="email"]),
+div:has(> input[type="email"]),
+div:has(> input[placeholder="Email"]) { 
+    width: 48% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Garante que o input interno preencha esse espaço de 48% */
+.form-input[type="email"],
+input[placeholder="Email"] {
+    width: 100% !important;
+}
+
+/* Esse bloco segura a grade de 48% ao lado do texto de Horários */
+.bloco-input-cor {
+    width: 48%;
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5rem; 
+}
+
+/* O input de cor agora se adapta ao tamanho do bloco pai */
+.form-input-color.picker {
+    width: 100%; 
+    height: 5rem;
+    background-color: transparent;
+    border: 2px solid var(--input-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+/* O texto de aviso sutil */
+.aviso-cor {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2rem; 
+    color: var(--text-color);
+    opacity: 0.7; 
+    line-height: 1.4;
+}
+
+.form-cadastro-btn {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    position: relative;
+    padding: 1.6rem 0;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: 1rem;
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+}
+
+/* Container do aviso flutuante */
+.aviso-flutuante {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 1.2rem 2.4rem;
+    border-radius: 0.8rem;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    white-space: nowrap;
+}
+
+/* Variante de Sucesso */
+.aviso-flutuante.sucesso {
+    background-color: #2e7d32;
+    color: var(--input-border);
+}
+
+/* Variante de Erro */
+.aviso-flutuante.erro {
+    background-color: #c11f14;
+    color: var(--input-border);
+}

@@ -1,5 +1,6 @@
-import { useState, useLayoutEffect, createContext, useContext, type ReactNode } from 'react'
+import { useState, useLayoutEffect, createContext, useContext, useEffect, type ReactNode } from 'react'
 import { createBrowserRouter, RouterProvider, useNavigate, Navigate, Outlet, useLocation } from 'react-router-dom'
+import axios from 'axios' // 💡 Importação adicionada para buscar os dados
 
 import '../global/global.css'
 import Header from './components/ui/Header'
@@ -11,8 +12,55 @@ import PainelBoasVindas from './components/auth/PainelBoasVindas'
 import Login from './components/auth/Login'
 import Footer from './components/ui/Footer'
 
-import { Dashboard } from './components/Dashboard/Dashboard'
+import  {Dashboard}  from './components/Dashboard/Dashboard'
 import { RotaProtegida } from '../infra/RotaProtegida'
+import { CreateProfissional } from './components/Profissionais/CreateProfissional'
+import { InfoProfissionais } from './components/Profissionais/InfoProfissionais'
+
+// === 0. TIPAGEM E COMPONENTE INTEGRADOR PARA PROFISSIONAIS ===
+interface Profissional {
+  id: number | string;
+  nome: string;
+  cnpj: string;
+  especialidade: string;
+  email: string;
+  telefone: string;
+  cor: string;
+  status: string;
+}
+
+function PaginaProfissionais() {
+  const [profissionais, setProfissionais] = useState<Profissional[]>([]);
+  const [carregando, setCarregando] = useState(true);
+
+  // Busca os profissionais do seu backend local
+  const carregarProfissionais = async () => {
+    try {
+      const response = await axios.get<Profissional[]>("http://localhost:8000/profissionais");
+      setProfissionais(response.data);
+    } catch (error) {
+      console.error("Erro ao carregar a lista de profissionais:", error);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  useEffect(() => {
+    carregarProfissionais();
+  }, []);
+
+  if (carregando) {
+    return <div style={{ padding: "1rem", color: "var(--text-color)" }}>Carregando profissionais...</div>
+  }
+
+  return (
+    <div className="painel-profissionais-wrapper">
+      <CreateProfissional onCadastroSucess={carregarProfissionais} />
+      
+      <InfoProfissionais profissionais={profissionais} />
+    </div>
+  );
+}
 
 // 1. Contexto de Tema
 interface TemaContextData {
@@ -84,11 +132,7 @@ function ConteudoAutenticacao() {
 }
 
 function LayoutAutenticacao() {
-  return (
-    <Tema>
-      <ConteudoAutenticacao/>
-    </Tema>
-  )
+  return <ConteudoAutenticacao />
 }
 
 function PaginaAutenticacao() {
@@ -111,11 +155,11 @@ function PaginaAutenticacao() {
   )
 }
 
-// 3. Página Privada
+// 3. Página Privada (Dashboard)
 function ConteudoDashboard() {
   const { isDarkMode, inverterTema } = useTema()
   const navigate = useNavigate()
-  const perfilUsuario = (localStorage.getItem("perfil") as 'ADMIN' | 'PROFISSIONAL') || 'PROFISSIONAL'
+  const perfilUsuario = 'PROFISSIONAL-ADMIN'
 
   const efetuarLogout = () => {
     localStorage.removeItem("token")
@@ -163,25 +207,25 @@ const router = createBrowserRouter([
         element: <RotaProtegida />,
         children: [
           {
-             path: "dashboard",
+            path: "dashboard",
             element: <PaginaDashboard />,
             children: [
               {
                 index: true,
-                // Se o usuário acessar apenas /dashboard, ele é redirecionado de forma segura para /dashboard/agenda
                 element: <Navigate to="agenda" replace /> 
               },
               {
                 path: "agenda",
-                element: <div>Painel da Agenda</div> // Substitua pelo seu componente <Agenda /> real
+                element: <div>Painel da Agenda</div>
               },
               {
                 path: "pacientes",
-                element: <div>Painel de Pacientes</div> // Substitua pelo seu componente <Pacientes /> real
+                element: <div>Painel de Pacientes</div>
               },
               {
+              
                 path: "profissionais",
-                element: <div>Painel de Profissionais</div> // Substitua pelo seu componente <Profissionais /> real
+                element: <PaginaProfissionais />
               }
             ]
           }

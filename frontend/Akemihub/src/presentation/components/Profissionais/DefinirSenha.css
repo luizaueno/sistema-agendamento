@@ -1,0 +1,161 @@
+
+main#conteudo-ancora.container.modo-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  left: 0 ;
+  transform: none ;
+  float: none ;
+  width: 100% ;
+  box-sizing: border-box ;
+}
+
+main#conteudo-ancora.container.modo-login .conteudo-formulario {
+  width: 100% ;
+  max-width: 60rem ;
+  margin: 0 auto ;
+  float: none ;
+  display: block ;
+  border-radius: 1.2rem ;
+  padding: 4rem 3.2rem ;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) ;
+}
+
+.senha-title , .senha-subtitle {
+   display: flex;
+   margin-bottom: 2rem;
+   color: var(--text-color);
+}
+
+
+/* Estilo dos Inputs */
+main#conteudo-ancora.container.modo-login .form-cadastro-input {
+  width: 100% ;
+  padding: 1.2rem 1.6rem ;
+  background-color: var(--cadastro-background) ; /* Fundo interno do input */
+  border: 2px solid var(--input-border) ;
+  border-radius: 6px ;
+  color: var(--text-color) ;
+  font-size: 15px ;
+  transition: all 0.2s ease ;
+  box-sizing: border-box ;
+  height: auto ; /* Reseta alturas fixas antigas */
+}
+
+/* Borda Verde ao Clicar no Input */
+main#conteudo-ancora.container.modo-login .form-cadastro-input:focus {
+  outline: none ;
+  border-color: var(--input-border) ; 
+  box-shadow: 0 0 0 0.3 rgba(0, 0, 0, 0.5) ;
+}
+
+/* Se o input tiver erro */
+main#conteudo-ancora.container.modo-login .form-cadastro-input.input-com-erro {
+  border-color: var(--error-color) ;
+}
+
+
+main#conteudo-ancora.container.modo-login .tela-login-button {
+  width: 100% ;
+  padding: 14px ;
+  background-color: var(--button-background) ; 
+  color: #ffffff ;
+  border: none ;
+  border-radius: 6px ;
+  font-size: 16px ;
+  font-weight: 600 ;
+  cursor: pointer ;
+  transition: background-color 0.2s ease ;
+  text-align: center ;
+  text-decoration: none ;
+  display: inline-block ;
+  box-sizing: border-box ;
+  box-shadow: none ;
+}
+
+main#conteudo-ancora.container.modo-login .tela-login-button:hover {
+background-color: #7b013a; 
+}
+
+/* Espaçamento entre os grupos */
+.tela-login-group {
+  margin-bottom: 40rem;
+}
+
+/* --- 4. TELA FIXA DE SUCESSO (LADO A LADO) --- */
+
+/* --- 4. TELA FIXA DE SUCESSO --- */
+
+/* Container principal alinhado em linha (lado a lado) */
+.sucesso-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;       /* Centraliza o ícone verticalmente com o bloco de texto */
+    justify-content: center;   /* Centraliza o conjunto todo no meio da tela */
+    gap: 1rem;               /* Espaço horizontal entre o ícone e os textos */
+    padding: 1rem 0;
+}
+
+/* Container do ícone */
+.sucesso-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;            /* Impede o ícone de amassar em telas menores */
+}
+
+/* Container que agrupa os textos e o botão verticalmente */
+.sucesso-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;   /* Alinha título, subtítulo e botão à esquerda */
+    color: var(--text-color);
+    text-align: left;          /* Garante o alinhamento do texto à esquerda */
+     margin-bottom: 0.5rem;
+}
+
+/* Ajuste fino no subtítulo para não esticar demais para a direita */
+.sucesso-layout .senha-subtitle {
+    margin-bottom: 1rem;     /* Um pequeno espaço extra antes do botão */
+    max-width: 40rem;          /* Limita a largura para manter uma boa leitura */
+}
+
+
+
+
+
+/* --- 3. REGRAS DE MUDANÇA PARA O MODO CLARO --- */
+html.modo-claro main#conteudo-ancora.container.modo-login .conteudo-formulario {
+  background-color: var(--cadastro-background) ; /* Card branco */
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) ;
+}
+
+html.modo-claro main#conteudo-ancora.container.modo-login .form-cadastro-input {
+  background-color: var(--cadastro-background) ; /* Input cinza claro */
+  border-color: var(--input-border);
+  color: var(--text-color) ; /* Texto escuro no input */
+}
+
+/* Layout do Sucesso */
+.sucesso-layout {
+  text-align: center ;
+}
+
+.sucesso-icone-wrapper {
+  display: flex ;
+  justify-content: center ;
+  margin-bottom: 24px ;
+}
+
+html.modo-claro main#conteudo-ancora.container.modo-login .form-cadastro-input.input-com-erro {
+    border-color: var(--error-color);
+}
+
+/* Hover do botão no Modo Claro */
+html.modo-claro main#conteudo-ancora.container.modo-login .tela-login-button:hover {
+    background-color: var(--button-background-hover, #b80056); /* Substitua pela cor desejada para o modo claro */
+}
