@@ -1,6 +1,6 @@
 from datetime import datetime
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel # Adicionado para estruturar os dados que vêm do Front-end
+from pydantic import BaseModel 
 from domain.responses.CadastroProfissionalResponse import CadastroProfissionalResponse
 from domain.service.ProfissionalService import ProfissionalService
 from domain.service.UsuarioService import UsuarioService
@@ -17,10 +17,6 @@ rotas = APIRouter()
 def cadastrar(dto: ProfissionalDTO, db = Depends(criar_conexao)):    
     try:
         profissional_service = ProfissionalService(db)
-        
-        # Se qualquer erro de validação/negócio acontecer aqui dentro, 
-        # ele será lançado (raise) e o FastAPI jogará para o main.py tratar.
-
         response = profissional_service.cadastrar(dto)
 
         email_destinatario = response["email"]
@@ -32,18 +28,29 @@ def cadastrar(dto: ProfissionalDTO, db = Depends(criar_conexao)):
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-  
+
+
+@rotas.get("/profissionais")
+async def listar_profissionais(db = Depends(criar_conexao)):
+    try:
+        # Instancia o service passando a conexão gerenciada pelo FastAPI
+        service = ProfissionalService(db)
+        
+        # Executa a listagem (buscando do Passo 1 do Service) e devolve para o React
+        dados = service.listar(id_empresa=1)
+        return dados
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 
 class AtivarcontaDTO(BaseModel):
     token: str
     nova_senha: str
 
 @rotas.post("/profissionais/ativarconta")
-# rota que o front chama enviando o token e a senha
 def ativar_conta(dados: AtivarcontaDTO, db=Depends(criar_conexao)):
     try:
         profissional_service = ProfissionalService(db)
-        # Se qualquer erro de validação/negócio acontecer aqui dentro,  ele será lançado (raise) e o FastAPI jogará para o main.py tratar.
         response = profissional_service.ativar_conta(token=dados.token, nova_senha=dados.nova_senha)
         return response
     

@@ -107,3 +107,39 @@ class ProfissionalService:
         except Exception:
             self.db_connection.rollback()
             raise 
+
+    def listar(self, id_empresa=1):
+        if self.db_connection is None:
+            raise ErroConexaobd("Não foi possível estabelecer conexão com o banco de dados")
+            
+        try:
+            # 1. Busca os profissionais (executa o método do repositório modificado)
+            if hasattr(self.repo, 'listar_por_empresa'):
+                profissionais = self.repo.listar_por_empresa(id_empresa, self.db_connection)
+            elif hasattr(self.repo, 'buscar_todos'):
+                profissionais = self.repo.buscar_todos(self.db_connection)
+            else:
+                profissionais = self.repo.listar(id_empresa, self.db_connection)
+
+            if profissionais is None:
+                profissionais = []
+
+            lista_retorno = []
+            for p in profissionais:
+                # 🛠️ CORREÇÃO: Como 'p' é um dicionário (dictionary=True),
+                # acessamos os valores usando p.get('chave', 'valor_padrao')
+                lista_retorno.append({
+                    "id": p.get('id', ''),
+                    "nome": p.get('nome', ''),
+                    "cnpj": p.get('cnpj', ''),
+                    "especialidade": p.get('especialidade', ''),
+                    "email": p.get('email', ''),
+                    "telefone": p.get('telefone', ''),
+                    "cor": p.get('cor', '#E3E7ED'),
+                    "status": p.get('status', 'Conta ativa') 
+                })
+                
+            return lista_retorno
+        except Exception as e:
+            print("\n❌ ERRO DETALHADO NO SERVICE PYTHON:", str(e), "\n")
+            raise Exception(f"Erro interno no repositório de profissionais: {str(e)}")

@@ -41,13 +41,32 @@ class ProfissionalRepository:
         if connection:
             try:
                 cursor = connection.cursor(dictionary=True)
-                sql = "SELECT P.id, P.nome, P.especialidade, C.status_convite FROM Profissional P LEFT JOIN convite_ativacao C ON P.id_usuario = C.id_usuario"
+                
+                # 🖥️ QUERY COM LIMPEZA DE STRING LITERAL 'None' DIRETO NO BANCO:
+                # Se o campo telefone for 'None', o MySQL retorna '' (vazio)
+                sql = """
+                    SELECT 
+                        P.idprofissional AS id, 
+                        COALESCE(U.nome, P.nome, 'Sem Nome') AS nome, 
+                        COALESCE(P.especialidade, '') AS especialidade, 
+                        IF(P.CNPJ = 'None', '', COALESCE(P.CNPJ, '')) AS cnpj, 
+                        IF(P.telefone = 'None', '', COALESCE(P.telefone, '')) AS telefone, 
+                        COALESCE(P.cor, '#E3E7ED') AS cor,
+                        CASE 
+                            WHEN C.utilizado = 1 THEN 'Conta ativa'
+                            ELSE 'Convite pendente'
+                        END AS status,
+                        IF(U.email = 'None', '', COALESCE(U.email, '')) AS email
+                    FROM profissional P 
+                    LEFT JOIN usuario U ON P.id_usuario = U.id_usuario
+                    LEFT JOIN convite_ativacao C ON P.id_usuario = C.id_usuario
+                """
+                
                 cursor.execute(sql)
                 resultado = cursor.fetchall() 
                 return resultado
             except Exception as e:
-                print(f"Erro ao buscar no banco: {e}")
+                print(f"❌ ERRO AO BUSCAR DADOS COMPLETOS: {e}")
                 return None
             finally:
                 cursor.close()
-                    
