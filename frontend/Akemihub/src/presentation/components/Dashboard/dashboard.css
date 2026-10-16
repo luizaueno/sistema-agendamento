@@ -5,6 +5,12 @@
     overflow: hidden;
 }
 
+.dashboard-content {
+    flex: 1; 
+    padding: 2rem; 
+    box-sizing: border-box;
+}
+
 .dashboard-sidebar {
     display: flex;
     flex-direction: column;
@@ -31,6 +37,12 @@
     display: none;
 }
 
+.dashboard-sidebar.recolhido .nav-btn span,
+.dashboard-sidebar.recolhido .logout-button span {
+    display: none;
+}
+
+
 .sidebar-btn {
     margin-top: 5rem;
     padding: 1rem;
@@ -42,11 +54,7 @@
     color: var(--text-color);
     background-color: transparent;
     border: none;
-    transition: all 0.3s ease;
-}
-
-.dashboard-sidebar.recolhido .sidebar-btn {
-    justify-content: center;
+    transition: 0.2s ease;
 }
 
 .sidebar-links {
@@ -57,74 +65,22 @@
     gap: 1.5rem;
 }
 
-.nav-btn {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  z-index: 1;
-  padding: 1rem;
-  border-radius: 1.5rem;
-  text-decoration: none;
-  color: var(--text-color);
-    overflow: hidden;
-  transition: 0.9s color ease;
-}
-
-.nav-btn:hover, 
-.sidebar-links .nav-btn.active {
-    color: var(--button-text-color);
-   
-}
-
-.nav-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%; 
-    height: 100%;
-    background-color: var(--button-background);
-    z-index: -1; 
-    border-radius: 1.5rem;
-    transition: width 0.4s ease-in-out;
-}
-
-.nav-btn:hover::before,
-.sidebar-links .nav-btn.active::before {
-    width: 100%;
-}
-
-.dashboard-sidebar.recolhido .nav-btn {
-    padding: 1rem 0;
-    justify-content: center;
-}
-
-.logout-button {
-    position: relative; 
-    overflow: hidden;    
-    z-index: 1; 
+.nav-btn, .logout-button {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    background-color: transparent;
-    border: 2px solid var(--cadastro-background);
-    color: var(--text-color);
+    z-index: 1;
     padding: 1rem;
     border-radius: 1.5rem;
+    text-decoration: none;
+    color: var(--text-color);
+    overflow: hidden;
     cursor: pointer;
-    margin-top: auto;
-    white-space: nowrap;
-    transition: color 0.5s ease, border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
 }
 
-.logout-button:hover {
-    background-color: transparent; 
-    color: var(--button-text-color);
-    border-color: var(--button-background); 
-}
-
-.logout-button::before {
+.nav-btn::before, .logout-button::before {
     content: "";
     position: absolute;
     top: 0;
@@ -133,21 +89,45 @@
     height: 100%;
     background-color: var(--button-background);
     z-index: -1; 
-    border-radius: 1.5rem;
-    transition: width 0.4s ease-in-out;
+    border-radius: 1.2rem;
+    transition: width 0.3s ease;
 }
 
+.nav-btn:hover {
+    color: var(--text-color); 
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-links .nav-btn.active, 
+.logout-button:hover {
+    color: var(--button-text-color);
+}
+
+.sidebar-links .nav-btn.active::before, 
 .logout-button:hover::before {
     width: 100%;
 }
 
-.dashboard-sidebar.recolhido .logout-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.5rem 0;
-    width: 100%;
-    border: none;
+.logout-button {
+    background-color: transparent;
+    border: 2px solid var(--cadastro-background);
+    margin-top: auto;
+    white-space: nowrap;
+}
+
+.logout-button:hover {
+    border-color: var(--button-background); 
 }
 
 
+.dashboard-sidebar.recolhido .sidebar-btn,
+.dashboard-sidebar.recolhido .nav-btn,
+.dashboard-sidebar.recolhido .logout-button {
+    justify-content: center;
+    padding: 1.2rem 0;       
+    gap: 0;                
+}
+
+.dashboard-sidebar.recolhido .logout-button {
+    border: none;            
+}

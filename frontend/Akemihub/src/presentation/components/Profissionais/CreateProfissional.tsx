@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react" 
 import './CreateProfissional.css'
 import axios from 'axios'
@@ -120,12 +121,23 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
       setCarregando(false)
     }
   }
+=======
+import { useState } from "react" 
+import './CreateProfissional.css' 
+
+export function CreateProfissional() { 
+  const [cadastroProfissionalAberto, setCadastroProfissionalAberto] = useState(false);
+>>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
 
   return ( 
     <> 
       <div className="profissional-container"> 
         <h2 className="title">Profissionais</h2> 
+<<<<<<< HEAD
         <button className="btn-cadastro-novo" onClick={() => setCadastroProfissionalAberto(true)}>
+=======
+        <button className="btn-cadastro" onClick={() => setCadastroProfissionalAberto(true)}>
+>>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
           Cadastrar
         </button> 
       </div> 
@@ -139,6 +151,7 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
             }
           }}
         > 
+<<<<<<< HEAD
             {sucessoEnvio && (
               <div className="aviso-flutuante sucesso">
                 Cadastro realizado com sucesso!
@@ -270,5 +283,31 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
         </div> 
       )} 
     </> 
+=======
+          <div className="conteudo-formulario" onClick={(e) => e.stopPropagation()}> 
+            <>
+              <h3 className="subtitle">Cadastre um profissional</h3> 
+              <input className="form-input" type="text" placeholder="Nome" /> 
+              <input className="form-input" type="text" placeholder="CNPJ" /> 
+              <input className="form-input" type="text" placeholder="Especialidade" /> 
+              <input className="form-input" type="text" placeholder="Telefone" /> 
+              <input className="form-input" type="email" placeholder="Email" /> 
+              
+              <div className="form-input-tag">Segunda 10h-16h</div> 
+              
+              <div className="bloco-input-cor">
+                <input className="form-input-color picker" type="color" defaultValue="#88003F" />
+                <span className="aviso-cor">* Esta cor será usada para identificar o profissional na agenda.</span>
+              </div> 
+              
+              <button className="form-cadastro-btn">
+                <span>Cadastrar e enviar convite</span>
+              </button> 
+            </>
+          </div> 
+        </div>
+      )}
+    </>
+>>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
   )
 }
