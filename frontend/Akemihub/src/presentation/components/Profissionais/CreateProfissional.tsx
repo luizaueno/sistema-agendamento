@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from "react" 
 import './CreateProfissional.css'
 import axios from 'axios'
@@ -31,21 +30,11 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
       ...dadosProfissional, [name]: value
     })
 
-    if (name === "nome") {
-      setErroNome("")
-    }
-    else if (name === "cnpj") {
-        setErroCNPJ("")
-    }
-    else if (name === "email") {
-        setErroEmail("")
-    }
-    else if (name === "especialidade") {
-        setErroEspecialidade("")
-    }
-    else if (name === "telefone") {
-        setErroTelefone("")
-    }
+    if (name === "nome") setErroNome("")
+    else if (name === "cnpj") setErroCNPJ("")
+    else if (name === "email") setErroEmail("")
+    else if (name === "especialidade") setErroEspecialidade("")
+    else if (name === "telefone") setErroTelefone("")
   }
 
   function HandleBlur(event: React.FocusEvent<HTMLInputElement>) {
@@ -75,6 +64,7 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
 
   async function HandleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    event.stopPropagation()
     setErroEnvio("")
     
     const eNome = validarNome(dadosProfissional.nome) || ""
@@ -96,19 +86,23 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
     try {
       setCarregando(true)
       setErroEnvio("")
+      
       await axios.post('http://localhost:8000/profissionais', dadosProfissional)
-      onCadastroSucess()
+      
       setSucessoEnvio(true) 
       setDadosProfissional({ nome: "", cnpj: "", especialidade: "", email: "", telefone: "", cor: "#E3E7ED" })
       
-      // 3. Aguarda 3 segundos com o aviso na tela antes de fechar tudo
       setTimeout(() => {
         setCadastroProfissionalAberto(false)
-        setSucessoEnvio(false) // Reseta o estado de sucesso
+        setSucessoEnvio(false) 
+        
+        if (typeof onCadastroSucess === 'function') {
+          onCadastroSucess()
+        }
       }, 3000)
     }
     catch (error: any) {
-        if (error.response && error.response.data && error.response.data.message) {
+      if (error.response && error.response.data && error.response.data.message) {
           setErroEnvio(error.response.data.message)
       } else {
           setErroEnvio("Não foi possível conectar ao servidor. Tente novamente mais tarde.")
@@ -121,23 +115,21 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
       setCarregando(false)
     }
   }
-=======
-import { useState } from "react" 
-import './CreateProfissional.css' 
-
-export function CreateProfissional() { 
-  const [cadastroProfissionalAberto, setCadastroProfissionalAberto] = useState(false);
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
 
   return ( 
-    <> 
+    <div id="wrapper-create-profissional" style={{ display: 'contents' }}> 
       <div className="profissional-container"> 
-        <h2 className="title">Profissionais</h2> 
-<<<<<<< HEAD
-        <button className="btn-cadastro-novo" onClick={() => setCadastroProfissionalAberto(true)}>
-=======
-        <button className="btn-cadastro" onClick={() => setCadastroProfissionalAberto(true)}>
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
+        <h2 className="title">Profissionais</h2>
+        
+        <button 
+          type="button" 
+          className="btn-cadastro" 
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            setCadastroProfissionalAberto(true)
+          }}
+        >
           Cadastrar
         </button> 
       </div> 
@@ -147,24 +139,27 @@ export function CreateProfissional() {
           className="container-formulario" 
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              setCadastroProfissionalAberto(false);
+              e.preventDefault()
+              e.stopPropagation()
+              setCadastroProfissionalAberto(false)
             }
           }}
         > 
-<<<<<<< HEAD
-            {sucessoEnvio && (
-              <div className="aviso-flutuante sucesso">
-                Cadastro realizado com sucesso!
-              </div>
-            )}
+          {sucessoEnvio && (
+            <div className="aviso-flutuante sucesso">
+              Cadastro realizado com sucesso!
+            </div>
+          )}
 
-            {erroEnvio && (
+          {erroEnvio && (
             <div className="aviso-flutuante erro">
               ❌ {erroEnvio}
             </div>
-        )}
+          )}
+            
           <form onSubmit={HandleSubmit} className={`conteudo-formulario ${className ?? ""}`.trim()}>
-          <h3 className="subtitle">Cadastre um profissional</h3>
+            <h3 className="subtitle">Cadastre um profissional</h3>
+            
             {/* Campo: Nome */}
             <div className="form-cadastro-group">
               <input 
@@ -231,11 +226,11 @@ export function CreateProfissional() {
                 className={`form-input ${erroTelefone ? 'input-com-erro' : ''}`} 
                 type="text" 
                 placeholder="Telefone" 
-                name="telefone" 
-                value={dadosProfissional.telefone} 
-                onChange={HandleChange} 
-                onBlur={HandleBlur} 
-                id="telefone" 
+                name="telefone"
+                value={dadosProfissional.telefone}
+                onChange={HandleChange}
+                onBlur={HandleBlur}
+                id="telefone"
               /> 
               {erroTelefone && (
                 <div className="container-erro">
@@ -276,38 +271,12 @@ export function CreateProfissional() {
               <span className="aviso-cor">* Esta cor será usada para identificar o profissional na agenda.</span>
             </div> 
 
-            <button type="submit" className="btn-cadastro" disabled={carregando}>
+            <button type="submit" className="form-cadastro-btn" disabled={carregando}>
               {carregando ? "Cadastrando..." : "Confirmar Cadastro"}
             </button>
           </form>
         </div> 
       )} 
-    </> 
-=======
-          <div className="conteudo-formulario" onClick={(e) => e.stopPropagation()}> 
-            <>
-              <h3 className="subtitle">Cadastre um profissional</h3> 
-              <input className="form-input" type="text" placeholder="Nome" /> 
-              <input className="form-input" type="text" placeholder="CNPJ" /> 
-              <input className="form-input" type="text" placeholder="Especialidade" /> 
-              <input className="form-input" type="text" placeholder="Telefone" /> 
-              <input className="form-input" type="email" placeholder="Email" /> 
-              
-              <div className="form-input-tag">Segunda 10h-16h</div> 
-              
-              <div className="bloco-input-cor">
-                <input className="form-input-color picker" type="color" defaultValue="#88003F" />
-                <span className="aviso-cor">* Esta cor será usada para identificar o profissional na agenda.</span>
-              </div> 
-              
-              <button className="form-cadastro-btn">
-                <span>Cadastrar e enviar convite</span>
-              </button> 
-            </>
-          </div> 
-        </div>
-      )}
-    </>
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
+    </div> 
   )
 }

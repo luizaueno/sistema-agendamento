@@ -1,5 +1,6 @@
-
-.form-cadastro-button, .botao-link, .tela-login-button {
+.form-cadastro-button, 
+.botao-link, 
+.tela-login-button {
     font-family: "Open Sans", sans-serif;
     font-weight: 600;
     font-size: 1.5rem;
@@ -12,37 +13,43 @@
     background-color: var(--casdastro-background);
     color: var(--button-text-color);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
-     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), 
-    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
-.form-cadastro-button:not(:focus-visible), .botao-link:not(:focus-visible), .tela-login-button:not(:focus-visible) {
+.form-cadastro-button:not(:focus-visible), 
+.botao-link:not(:focus-visible), 
+.tela-login-button:not(:focus-visible) {
     outline: none;
 }
 
-.form-cadastro-button:focus-visible, .botao-link:focus-visible, .tela-login-button:focus-visible {
+.form-cadastro-button:focus-visible, 
+.botao-link:focus-visible, 
+.tela-login-button:focus-visible {
     outline: 2px solid var(--input-border);
     border-radius: 1rem;
     transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   EFEITOS DE HOVER (PASSAR O MOUSE)
+   ========================================================================== */
 .form-cadastro-button:hover {
     cursor: pointer;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
+    color: var(--text-color);
 }
 
-<<<<<<< HEAD
- .botao-link:hover, .tela-login-button:hover {
+.botao-link:hover, 
+.tela-login-button:hover {
     cursor: pointer;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
-    background-color: var(--button-background);
     transition: 0.2s ease;
- }
+    color: var(--text-color);
+}
 
-=======
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
+/* Efeito de preenchimento em background (Apenas Cadastro) */
 .form-cadastro-button::before {
     content: "";
     position: absolute;
@@ -56,36 +63,43 @@
     border-radius: 1rem;
 }
 
-<<<<<<< HEAD
-
-
-.form-cadastro-button:hover:before, .botao-link:hover:before, .tela-login-button:hover:before {
-=======
-.form-cadastro-button:hover:before {
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
+.form-cadastro-button:hover::before, 
+.botao-link:hover::before, 
+.tela-login-button:hover::before {
     width: 100%;
 }
 
-/* Transição limpa de cor para a tela de login (Usa a mesma cor final do cadastro) */
-.tela-login-button {
-    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.4s ease;
+.form-cadastro-button:hover::before {
+    background-color: var(--button-background);
 }
+
+/* ==========================================================================
+   COMPORTAMENTOS E TRANSIÇÕES ESPECÍFICAS
+   ========================================================================== */
+
+/* Botão de Login */
+.tela-login-button {
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.4s ease;
+}
+
 .tela-login-button:hover {
     background-color: var(--button-background);
 }
 
-/* Transição leve para o botão link (Tratado como elemento secundário de navegação) */
+/* Botão Link (Secundário) */
 .botao-link {
     background: transparent;
     color: var(--casdastro-background);
     box-shadow: none;
     transition: color 0.2s ease, transform 0.2s ease;
 }
+
 .botao-link:hover {
     box-shadow: none;
     color: var(--button-background);
 }
 
+/* Botão de Cadastro Estrutural */
 .form-cadastro-button {
     max-width: 100%;
     margin: 0 auto;
@@ -98,10 +112,14 @@
     transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-radius 0.4s ease, background-color 0.3s ease, padding 0.4s ease;
 }
 
+/* ==========================================================================
+   ESTADOS DE DINÂMICOS DO PROCESSO (LOADING / SUCCESS / ERROR)
+   ========================================================================== */
 .form-cadastro-button:disabled {
     pointer-events: none;
 }
 
+/* Estado: Carregando */
 .form-cadastro-button:disabled[data-status="loading"] {
     height: 54px;
     width: auto;
@@ -111,6 +129,7 @@
     opacity: 0.8;
 }
 
+/* Estado: Sucesso */
 .form-cadastro-button[data-status="success"] {
     height: 54px;
     width: auto;
@@ -120,15 +139,15 @@
     background-color: var(--casdastro-background);
     color: var(--text-color);
     animation: efeitoBolinhaBotao 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-     pointer-events: none;
+    pointer-events: none;
     cursor: default;
 }
 
-/* 3. ESTADO ERRO: Vira círculo e usa a sua cor de erro vermelha */
+/* Estado: Erro */
 .form-cadastro-button[data-status="error"] {
     height: 54px;
     width: auto;
-    min-width:220px;
+    min-width: 220px;
     padding: 0 2.5rem;
     border-radius: 1rem;
     background-color: var(--casdastro-background);
@@ -138,10 +157,11 @@
     cursor: default;
 }
 
-/* ÍCONES INTERNOS (✓ e ✗): Surgem de forma elástica e fixam na tela */
-
-/* Propriedades comuns para os dois ícones (Tamanho e formato da bolinha) */
-.icon-success, .icon-error {
+/* ==========================================================================
+   ÍCONES DO BOTÃO (ANIMAÇÕES INTERNAS)
+   ========================================================================== */
+.icon-success, 
+.icon-error {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -155,21 +175,17 @@
     animation: popInIcone 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* Cor específica para a bolinha de SUCESSO (Ex: Texto e borda brancos no fundo verde) */
 .icon-success {
     border: 2px solid green; 
     color: green;
 }
 
-/* Cor específica para a bolinha de ERRO (Ex: Texto e borda brancos no fundo vermelho) */
 .icon-error {
     border: 2px solid rgb(216, 18, 18); 
     color: rgb(216, 18, 18);
 }
 
-
-
-/* O SEU LOADER (GIRATÓRIO) */
+/* Componente do Loader Giratório */
 .loader {
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-left-color: var(--button-background);
@@ -179,7 +195,9 @@
     animation: spin 0.8s linear infinite;
 }
 
-/* --- ANIMAÇÕES (KEYFRAMES) --- */
+/* ==========================================================================
+   ANIMAÇÕES DE INTERAÇÃO (KEYFRAMES)
+   ========================================================================== */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

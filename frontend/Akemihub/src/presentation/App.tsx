@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect, createContext, useContext, useEffect, type ReactNode } from 'react'
 import { createBrowserRouter, RouterProvider, useNavigate, Navigate, Outlet, useLocation } from 'react-router-dom'
-import axios from 'axios' // 💡 Importação adicionada para buscar os dados
+import axios from 'axios'
 
 import '../global/global.css'
 import Header from './components/ui/Header'
@@ -11,12 +11,11 @@ import Cadastro from './components/auth/Cadastro'
 import PainelBoasVindas from './components/auth/PainelBoasVindas'
 import Login from './components/auth/Login'
 import Footer from './components/ui/Footer'
-import CreateProfissional from './components/Profissionais/CreateProfissional'
 
-import  {Dashboard}  from './components/Dashboard/Dashboard'
+import { Dashboard } from './components/Dashboard/Dashboard'
 import { RotaProtegida } from '../infra/RotaProtegida'
-import { CreateProfissional } from './components/Profissionais/CreateProfissional'
 import { InfoProfissionais } from './components/Profissionais/InfoProfissionais'
+import { CreateProfissional } from './components/Profissionais/CreateProfissional'
 
 // === 0. TIPAGEM E COMPONENTE INTEGRADOR PARA PROFISSIONAIS ===
 interface Profissional {
@@ -34,7 +33,6 @@ function PaginaProfissionais() {
   const [profissionais, setProfissionais] = useState<Profissional[]>([]);
   const [carregando, setCarregando] = useState(true);
 
-  // Busca os profissionais do seu backend local
   const carregarProfissionais = async () => {
     try {
       const response = await axios.get<Profissional[]>("http://localhost:8000/profissionais");
@@ -56,9 +54,13 @@ function PaginaProfissionais() {
 
   return (
     <div className="painel-profissionais-wrapper">
+      {/* O componente CreateProfissional agora gerencia o cabeçalho e o modal de cadastro */}
       <CreateProfissional onCadastroSucess={carregarProfissionais} />
       
       <InfoProfissionais profissionais={profissionais} />
+
+      {/* Fornece a função de recarregar para o modal filho através do context se necessário */}
+      <Outlet context={{ carregarProfissionais }} />
     </div>
   );
 }
@@ -181,7 +183,7 @@ function PaginaDashboard() {
   return <ConteudoDashboard />
 }
 
-// 4. Configuração das Rotas
+// 4. Configuração das Rotas Corrigida
 const router = createBrowserRouter([
   {
     path: "/",
@@ -224,13 +226,8 @@ const router = createBrowserRouter([
                 element: <div>Painel de Pacientes</div>
               },
               {
-              
                 path: "profissionais",
-<<<<<<< HEAD
-                element: <PaginaProfissionais />
-=======
-                element: <CreateProfissional/>
->>>>>>> 7bd36284fd53a29c354be8171d4a9a41d551e060
+                element: <PaginaProfissionais />,
               }
             ]
           }

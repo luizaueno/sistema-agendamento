@@ -124,9 +124,6 @@ background-color: #7b013a;
 }
 
 
-
-
-
 /* --- 3. REGRAS DE MUDANÇA PARA O MODO CLARO --- */
 html.modo-claro main#conteudo-ancora.container.modo-login .conteudo-formulario {
   background-color: var(--cadastro-background) ; /* Card branco */
