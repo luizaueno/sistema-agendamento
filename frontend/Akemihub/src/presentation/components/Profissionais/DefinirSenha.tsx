@@ -2,16 +2,19 @@ import { validarSenha } from "../../../core/validations/login";
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSearchParams, Link } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
-import './DefinirSenha.css'; // Importando o CSS limpo
+import { CheckCircle2, Eye, EyeOff, Sun, Moon } from 'lucide-react';
+import './DefinirSenha.css'; 
+import { useTema } from '../../App'
 
 export function DefinirSenha() {
     const [searchParams] = useSearchParams()
     const token = searchParams.get("token")
-
-    const [dadosSenha, setDadosSenha] = useState({ senha: "", confirmarSenha: "" });
-    const [erroSenha, setErroSenha] = useState("");
-    const [sucesso, setSucesso] = useState(true);
+    const { isDarkMode, inverterTema } = useTema()
+    const [dadosSenha, setDadosSenha] = useState({ senha: "", confirmarSenha: "" })
+    const [erroSenha, setErroSenha] = useState("")
+    const [mostrarSenha, setMostrarSenha] = useState(false)
+    const [mostrarConfirmarSenha, setMostrarConfirmarSenha] = useState(false);
+    const [sucesso, setSucesso] = useState(false)
 
     function HandleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target
@@ -42,23 +45,35 @@ export function DefinirSenha() {
         }
 
         try {
-            await axios.post('http://localhost:8000/definirsenha', {
-                senha: dadosSenha.senha,
+            await axios.post('http://localhost:8000/profissionais/ativarconta', {
+                nova_senha: dadosSenha.senha,
                 token: token 
             })
 
             setSucesso(true)
         } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                console.log("DETALHE DO ERRO DO FASTAPI:", error.response.data);
+            }
             console.error("ERRO: ", error)
-            setErroSenha("Erro ao definir a senha. O link pode ter expirado.")
+            setErroSenha("Erro ao definir a senha. O link pode ter expirado ou o token é inválido.")
         }
     }
 
     return (
-        <main id="conteudo-ancora" className="container modo-login">
-            <div className="conteudo-formulario">
-                
-                {/* 2. TELA FIXA DE SUCESSO (ESTILO MANUAL APENAS NO ALINHAMENTO) */}
+        <>
+        <header id="topo-ancora" role="banner" tabIndex={-1}>
+            <h1 className="titulo-sistema">Akemi Hub</h1>
+            <button 
+                id="alternar-tema" 
+                onClick={inverterTema} 
+                aria-label="Alternar tema entre claro e escuro">  
+                {isDarkMode ? <Sun size={24} /> : <Moon size={24} />} 
+            </button>
+        </header>
+
+        <main className="definir-senha-main">
+            <div className="definir-senha-box">
                 {sucesso ? (
                     <div className="sucesso-layout">
                         <div className="sucesso-icone">
@@ -71,25 +86,24 @@ export function DefinirSenha() {
                             Sua credencial foi configurada com sucesso. 
                         </p>
 
-                        <Link to="/" className="tela-login-button" >
+                        <Link to="/login" className="tela-login-button">
                             Ir para o Login
                         </Link>
                     </div>
                 ) : (
                     
-                    /* 3. FORMULÁRIO DE CADASTRO DE SENHA TOTALMENTE INTEGRADO AO SEU PROJETO */
                     <form onSubmit={HandleSubmit}>
                         <h1 className="senha-title">Crie sua senha</h1>
                         <p className="senha-subtitle">Defina sua senha de acesso para concluir o seu cadastro.</p>
 
                         {/* Campo: Nova Senha */}
-                        <div className="tela-login-group" style={{ marginBottom: '20px' }}>
-                            <div className="form-input-wrapper">
+                        <div className="definir-senha-group">
+                            <div className="definir-senha-wrapper">
                                 <input 
                                     className={`form-cadastro-input ${erroSenha ? 'input-com-erro' : ''}`} 
                                     required 
                                     placeholder=" " 
-                                    type="password" 
+                                    type={mostrarSenha ? "text" : "password"}
                                     name="senha" 
                                     value={dadosSenha.senha} 
                                     onChange={HandleChange} 
@@ -97,40 +111,52 @@ export function DefinirSenha() {
                                     id="senha"
                                 /> 
                                 <label className="form-cadastro-label" htmlFor="senha">Nova Senha</label>
+                                <button
+                                    type="button"
+                                    className="botao-revelar-senha"
+                                    onClick={() => setMostrarSenha(!mostrarSenha)}>
+                                    {mostrarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
                             </div>
                         </div>
 
                         {/* Campo: Confirmar Nova Senha */}
-                        <div className="tela-login-group" style={{ marginBottom: '20px' }}>
-                            <div className="form-input-wrapper">
+                        <div className="definir-senha-group">
+                            <div className="definir-senha-wrapper">
                                 <input 
                                     className={`form-cadastro-input ${erroSenha ? 'input-com-erro' : ''}`} 
                                     required 
                                     placeholder=" " 
-                                    type="password" 
+                                    type={mostrarConfirmarSenha ? "text" : "password"}
                                     name="confirmarSenha" 
                                     value={dadosSenha.confirmarSenha} 
                                     onChange={HandleChange} 
                                     id="confirmarSenha"
                                 /> 
                                 <label className="form-cadastro-label" htmlFor="confirmarSenha">Confirme a senha</label>
+                                <button
+                                    type="button"
+                                    className="botao-revelar-senha"
+                                    onClick={() => setMostrarConfirmarSenha(!mostrarConfirmarSenha)}> 
+                                    {mostrarConfirmarSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
                             </div>
                         </div>
 
-                        {/* Mensagem de Erro baseada nas suas classes nativas de erro */}
                         {erroSenha && (
-                            <div className="container-erro" style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div className="container-erro" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                                 <i className="icone">!</i>
                                 <span className="form-login-erro">{erroSenha}</span>
                             </div>
                         )}
 
-                        <button className="tela-login-button" type="submit">Definir Senha</button>
-                    </form>
-                )}
-                
-            </div>
-        </main>
+                            <button className="tela-login-button" type="submit">Definir Senha</button>
+                        </form>
+                    )}
+                    
+                </div>
+            </main>
+        </>
     );
 }
 

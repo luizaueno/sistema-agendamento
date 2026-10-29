@@ -65,12 +65,14 @@
 
 .container-erro {
     display: flex;
-    align-items: flex-start; 
+    flex-direction: row;
+    align-items: center; 
+    flex-wrap: nowrap;
     gap: 0.7rem;
     margin-top: 0.8rem;
     color: var(--error-color);
     width: 30rem;
-    max-width: 100%;
+    max-width: max-content;
     box-sizing: border-box;
     position: relative;
 }
@@ -95,7 +97,8 @@
 
 .form-cadastro-erro {
     color: inherit;
+    white-space: nowrap;
     max-width: 100%;
-    display: block;
+    display: inline-block;
     font-size: 1.3rem;
 }

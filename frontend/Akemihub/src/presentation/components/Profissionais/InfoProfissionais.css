@@ -1,3 +1,4 @@
+
 .accordion-container {
   width: 100%;
   max-width: 115rem;
@@ -11,7 +12,7 @@
   overflow: hidden;
 }
 
-/* 1. Botão do cabeçalho que separa o conteúdo da seta */
+
 .accordion-header {
   width: 100%;
   display: flex;
@@ -31,11 +32,11 @@
 
 /* 2. Expande o conteúdo interno do botão e afasta o Nome do Status */
 .accordion-header-content {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important; 
-  flex-grow: 1 !important;                  
-  padding-right: 2.5rem !important; /* Margem de segurança antes da seta */         
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  flex-grow: 1;                  
+  padding-right: 2.5rem; /* Margem de segurança antes da seta */         
 }
 
 /* Nome do profissional fixado no canto esquerdo */
@@ -44,6 +45,67 @@
   font-weight: 600;
   font-family: "Open Sans", sans-serif;
   color: var(--text-color);
+}
+
+/* Seta indicativa no extremo canto direito */
+.accordion-seta {
+  font-size: 12px;
+  color: var(--input-border);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   3. BOTÕES DE AÇÃO E ESTRUTURA DE HOVER
+   ========================================================================== */
+.acoes-container {
+  display: flex;
+  gap: 0.6rem;
+  margin-left: auto; /* Empurra os ícones para colar antes do status */
+  margin-right: 1.5rem; /* Afasta os ícones do texto do status */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Mostra as ações ao passar o mouse no card ou no cabeçalho */
+.accordion-item:hover .acoes-container,
+.accordion-header:hover .acoes-container {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Estilo base dos botões que envolvem os ícones do Lucide */
+.btn-acao {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color); /* Herda a cor do seu texto padrão */
+  transition: all 0.2s ease;
+}
+
+/* Efeito Hover - Botão Editar (Apenas muda a cor do ícone e adiciona um fundo leve) */
+.btn-editar:hover {
+  background-color: var(--cadastro-background);
+  color: #3498db; /* Azul moderno */
+}
+
+.btn-salvar {
+  color: #2ecc71;
+}
+
+.btn-salvar:hover {
+  background-color: rgba(46, 204, 113, 0.1);
+}
+
+/* Efeito Hover - Botão Deletar (Fundo vermelho claro e ícone vermelho) */
+.btn-deletar:hover {
+  background-color: var(--cadastro-background); 
+  color: #e74c3c; /* Vermelho moderno */
 }
 
 /* Alinha o texto do status colado ao lado da sua bolinha */
@@ -75,19 +137,11 @@
 .indicador-cor.vermelho { background-color: #e74c3c; }   /* Conta desativada */
 .indicador-cor.amarelo { background-color: #f1c40f; }    /* Convite enviado */
 
-/* Seta indicativa no extremo canto direito */
-.accordion-seta {
-  font-size: 12px;
-  color: var(--input-border);
-  flex-shrink: 0;
-}
-
-/* 3. Conteúdo interno revelado ao abrir (Alinhamento em colunas retas) */
+/* ==========================================================================
+   5. CONTEÚDO REVELADO EM DUAS COLUNAS
+   ========================================================================== */
 .accordion-content {
-  display: grid;
-  grid-template-columns: 10rem 1fr; 
-  gap: 1rem 1.2rem; 
-  padding: 1.5rem 2rem;
+  padding: 2rem 1.5rem;
   background-color: var(--cadastro-background);
   border-top: 1px solid var(--input-border);
   font-size: 1.4rem;
@@ -95,54 +149,216 @@
   line-height: 1.5;
 }
 
-/* Remove margens e transforma as tags <p> em meros containers estruturais */
-.accordion-content p {
+/* Layout Dividido dentro do Accordion Aberto */
+.accordion-layout-split {
+  display: grid;
+  /* Define o tamanho das duas áreas: 1fr para a esquerda e 2fr para a direita */
+  grid-template-columns: 1fr 2fr; 
+  /* Força a coluna de dados a renderizar na esquerda e a de config na direita */
+  grid-template-areas: "dados config";
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* --- 👈 COLUNA DA ESQUERDA: DADOS CADASTRAIS (Via CSS) --- */
+.coluna-esquerda-dados {
+  grid-area: dados; /* Vincula a área definida no grid-template-areas */
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-left: 0;
+  border-left: none; /* Remove a borda da esquerda anterior */
+}
+
+.coluna-esquerda-dados p {
   margin: 0;
-  display: contents;
 }
 
-/* Esconde o container de ações por padrão */
-.acoes-container {
+/* --- 👉 COLUNA DA DIREITA: CONFIGURAÇÕES VISUAIS (Via CSS) --- */
+.coluna-direita-config {
+  grid-area: config; /* Vincula a área definida no grid-template-areas */
   display: flex;
-  gap: 0.6rem;
-  margin-left: auto; /* Empurra os ícones para colar antes do status */
-  margin-right: 1.5rem; /* Afasta os ícones do texto do status */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease-in-out;
+  flex-direction: column; /* Alterado para column para não quebrar o modo de edição */
+  gap: 1.5rem;
+  padding-left: 3rem;
+  border-left: 1px solid var(--input-border); /* Linha divisória lateral colocada no lado certo */
 }
 
-/* Mostra as ações ao passar o mouse no card ou no cabeçalho */
-.accordion-item:hover .acoes-container,
-.accordion-header:hover .acoes-container {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-
-/* Estilo base dos botões que envolvem os ícones do Lucide */
-.btn-acao {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.6rem;
-  border-radius: 0.8rem;
+/* Mantém os blocos de leitura alinhados em linha apenas no modo de visualização */
+.coluna-direita-config > .bloco-visual-info {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  color: var(--text-color); /* Herda a cor do seu texto padrão */
-  transition: all 0.2s ease;
+  gap: 1rem;
 }
 
-/* Efeito Hover - Botão Editar (Apenas muda a cor do ícone e adiciona um fundo leve) */
-.btn-editar:hover {
+.bloco-visual-info label {
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+/* Caixa que exibe a cor do profissional */
+.visualizacao-cor-box {
+  width: 60px;
+  height: 30px;
+  border-radius: 0.6rem;
+  border: 1px solid var(--input-border);
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.05);
+  display: block;    /* Força o elemento a aceitar altura e largura */
+  min-width: 60px;   /* Impede o Flexbox/Grid de esmagar o elemento para os lados */
+  min-height: 30px;  /* Impede o Flexbox/Grid de achatar o elemento para cima */
+  content: "";       /* Garante a renderização caso comporte-se como pseudo-elemento */
+}
+
+/* Tag de exibição do horário formatado */
+.tag-horario-display {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  width: max-content;
+}
+
+.modo-claro .tag-horario-display {
   background-color: var(--cadastro-background);
-  color: #3498db; /* Azul moderno */
 }
 
-/* Efeito Hover - Botão Deletar (Fundo vermelho claro e ícone vermelho) */
-.btn-deletar:hover {
-  background-color: var(--cadastro-background); 
-  color: #e74c3c; /* Vermelho moderno */
+
+/* ==========================================================================
+   6. INPUTS E FORMULÁRIO DE EDIÇÃO INLINE
+   ========================================================================== */
+.form-inputs-esquerda, 
+.form-inputs-direita {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
+.campo-inline-edicao {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.campo-inline-edicao label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+.campo-inline-edicao input[type="text"],
+.campo-inline-edicao input[type="email"] {
+  outline: none;
+  padding: 0.6rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+
+
+/* Inputs de Edição Especiais na Esquerda */
+.seletor-cor-input {
+  width: 65px;
+  height: 35px;
+  padding: 0;
+  border: 1px solid var(--input-border);
+  border-radius: 0.6rem;
+  cursor: pointer;
+  background: none;
+}
+
+.input-horario-texto {
+  width: 100%;
+  max-width: 200px;
+  padding: 0.6rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.4rem;
+  background-color: transparent;
+  color: var(--text-color);
+  font-size: 1.4rem;
+}
+
+
+/* ==========================================================================
+   7. MODAL DE EXCLUSÃO
+   ========================================================================== */
+.modal-exclusao {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Sombra preta suave sobre o app */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Garante que fica por cima dos profissionais */
+}
+
+/* O Card/Caixa interna do Modal */
+.modal-conteudo {
+  background-color: var(--cadastro-background); /* Cor escura padrão se o app estiver em modo dark */
+  color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 30rem;
+  width: 100%;
+}
+
+/* Se a classe .modo-claro estiver ativa no topo do app, o modal muda automaticamente */
+.modo-claro .modal-conteudo {
+  background-color: var(--cadastro-background);
+  color: var(--text-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Texto interno do Modal */
+.modal-conteudo p {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* Estilo base dos botões do Modal */
+.modal-conteudo button {
+  padding: 0.6rem 1.4rem;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Botão de Confirmar a Exclusão (Segue o padrão vermelho moderno do seu hover) */
+.btn-modal-confirmar {
+  background-color: #e74c3c; /* Vermelho moderno fixo para ação destrutiva */
+  color: white;
+}
+
+.btn-modal-confirmar:hover {
+  background-color: #c0392b; /* Vermelho um pouco mais escuro no hover */
+}
+
+/* Botão de Cancelar (Fundo neutro que combina com o seu tema) */
+.btn-modal-cancelar {
+  background-color: var(--cadastro-background);
+  color: var(--text-color, #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modo-claro .btn-modal-cancelar {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-modal-cancelar:hover {
+  background-color: rgba(128, 128, 128, 0.2);
+}

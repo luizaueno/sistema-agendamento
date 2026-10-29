@@ -112,7 +112,7 @@ function Cadastro({ className }: CadastroProps) {
                         <input className={`form-cadastro-input ${erroNome ? 'input-com-erro' : ''}`} required placeholder=" " type="text" name="nome" value={dadosCadastro.nome} onChange={HandleChange} onBlur={HandleBlur} id="nome"/> 
                         <label className="form-cadastro-label" htmlFor="nome">Nome da empresa</label> 
                     </div>
-                    {erroNome && (<div className="container-erro"><i className="icone">!</i><span className="form-cadastro-erro">{erroNome}</span></div>)}
+                    {erroNome && (<div className="container-erro" ><i className="icone">!</i><span className="form-cadastro-erro">{erroNome}</span></div>)}
                 </div>
 
                 <div className="form-cadastro-group">

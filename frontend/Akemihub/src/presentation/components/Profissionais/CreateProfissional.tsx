@@ -62,7 +62,7 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
     }
   }
 
-  async function HandleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function HandleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault()
     event.stopPropagation()
     setErroEnvio("")
@@ -121,17 +121,12 @@ export function CreateProfissional({className, onCadastroSucess}: CreateProfissi
       <div className="profissional-container"> 
         <h2 className="title">Profissionais</h2>
         
-        <button 
-          type="button" 
-          className="btn-cadastro" 
-          onClick={(e) => {
+        <button type="button" className="btn-cadastro" 
+        onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
             setCadastroProfissionalAberto(true)
-          }}
-        >
-          Cadastrar
-        </button> 
+          }} > Cadastrar </button> 
       </div> 
 
       {cadastroProfissionalAberto && ( 

@@ -1,16 +1,13 @@
 export function validarEmail(email: string): string | null {
-   
     if (email === '') {
         return "Informe um email"
     }
 
     const email_dividido = email.split("@")
-
     if (email_dividido.length !== 2 || !email_dividido[1].includes(".") || email_dividido[1].length < 6) {
         return "Formato incorreto do email"
     }
 
-    // Corrigido: adicionado [0][0] para verificar a primeira letra antes do @
     if (!email_dividido[0] || !/[a-zA-Z]/.test(email_dividido[0][0])) {
         return "Email deve começar com letra"
     }

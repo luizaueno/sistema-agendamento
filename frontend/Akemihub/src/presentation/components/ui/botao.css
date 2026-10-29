@@ -11,7 +11,7 @@
     border: none;
     border-radius: 1rem;
     background-color: var(--casdastro-background);
-    color: var(--button-text-color);
+    color: var(--text-color);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
     transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -41,12 +41,25 @@
     color: var(--text-color);
 }
 
-.botao-link:hover, 
-.tela-login-button:hover {
+.botao-link:hover {
     cursor: pointer;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
-    transition: 0.2s ease;
+    transition: 0.6s ease;
     color: var(--text-color);
+}
+
+.botao-link:hover {
+  cursor: pointer;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+  transition: 0.2s ease;
+  color: var(--text-color);
+}
+
+.tela-login-button:hover {
+  cursor: pointer;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+  background-color: var(--button-background);
+  color: var(--button-text-color); 
 }
 
 /* Efeito de preenchimento em background (Apenas Cadastro) */
@@ -84,6 +97,7 @@
 
 .tela-login-button:hover {
     background-color: var(--button-background);
+    color: var(--button-text-color);
 }
 
 /* Botão Link (Secundário) */
